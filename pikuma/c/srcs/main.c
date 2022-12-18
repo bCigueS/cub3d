@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:07:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/12/16 16:51:43 by sbeylot          ###   ########.fr       */
+/*   Updated: 2022/12/18 11:14:49 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	clean_cub(t_cub3d *cub)
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
 	if (cub->mlx_ptr != NULL)
 		mlx_destroy_display(cub->mlx_ptr);
+	clean_map(cub->map, MH - 1);
 	free(cub->mlx_ptr);
 }
 
@@ -59,6 +60,8 @@ int	quit(t_cub3d *cub)
 	return (0);
 }
 
+
+
 int	handle_key(int keycode, void *param)
 {
 	t_cub3d	*cub;
@@ -67,14 +70,25 @@ int	handle_key(int keycode, void *param)
 	if (keycode == KEY_ESC)
 	{
 		mlx_loop_end(cub->mlx_ptr);
-		cub->loop = 0;
 	}
 	if (keycode == KEY_W) {
-		cub->player->y -= 1 * cub->player->mspeed;
+		cub->player->walk = 1;
+		update_player(cub);
 		render_map(cub); 
 	}
 	if (keycode == KEY_S) {
-		cub->player->y += 1 *cub->player->mspeed;
+		cub->player->walk = -1;
+		update_player(cub);
+		render_map(cub);
+	}
+	if (keycode == KEY_ARROW_LEFT) {
+		cub->player->turn = -1;
+		update_player(cub);
+		render_map(cub);
+	}
+	if (keycode == KEY_ARROW_RIGHT) {
+		cub->player->turn = 1;
+		update_player(cub);
 		render_map(cub);
 	}
 	if (keycode == KEY_A) {
@@ -85,6 +99,7 @@ int	handle_key(int keycode, void *param)
 		cub->player->x += 1 *cub->player->mspeed;
 		render_map(cub);
 	}
+	usleep(1000);
 	return (0);
 }
 
@@ -94,6 +109,7 @@ void	render_map(t_cub3d *cub)
 	draw_wall(cub);
 	draw_grid(cub);
 	draw_player(cub);
+	printf("%f", cub->player->rangle);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->img.img, 0, 0);
 }
 
@@ -103,52 +119,22 @@ int	cub3d(t_cub3d *cub)
 		return (clean_cub(cub), cub_error());
 	if (init_player(cub) == false)
 		return (clean_cub(cub), cub_error());
+	if (init_ray(cub) == false)
+		return (clean_cub(cub), cub_error());
 	mlx_hook(cub->win_ptr, KEY_PRESS, (1L<<0) , &handle_key, cub);
 	mlx_hook(cub->win_ptr, EXIT, 0, &quit, cub);
-	while (cub->loop == 1)
-	{
-		time_t	start_time = time(NULL);
-		render_map(cub);
-		mlx_loop(cub->mlx_ptr);
-		time_t	elapsed_time = time(NULL) - start_time;
-		int sleep_time_ms = FPMS - elapsed_time * 1000;
-		if (sleep_time_ms > 0)
-			usleep(sleep_time_ms * 1000);
-	}
-	clean_cub(cub);
+	render_map(cub);
+	mlx_loop(cub->mlx_ptr);
+	//clean_cub(cub);
 	return (0);
 }
 
-int	**init_map(int map[MH][MW])
+int main(void)
 {
-	int	i;
-	int	**pmap;
-
-	(void)map;
-
-	i = 0;
-	pmap = (int **)malloc(sizeof(int *) * MH);
-	if (!pmap)
-		return (NULL);
-	while (i < MH)
-	{
-		pmap[i] = ft_calloc(MW, sizeof(int));
-		if (!pmap[i])
-			return (NULL); // Add un clean
-		i++;
-	}
-	pmap[5][5] = 'P';
-	return (pmap);
-}
-
-int main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-
+	t_cub3d	cub;
 	int map[MH][MW] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 80, 1, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
@@ -158,9 +144,9 @@ int main(int argc, char **argv)
 		{1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
-	t_cub3d	cub;
-	cub.loop = 1;
 	cub.map = init_map(map);
+	if (cub.map == NULL)
+		return (-1);
 	cub3d(&cub);	
 	return (0);
 }

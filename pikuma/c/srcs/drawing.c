@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 12:28:30 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/12/16 16:07:16 by sbeylot          ###   ########.fr       */
+/*   Updated: 2022/12/18 19:48:26 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,24 @@ void	draw_player(t_cub3d *cub)
 	draw_rectangle(cub, cub->player->x - cub->player->size / 2, \
 			cub->player->y - cub->player->size / 2, \
 			cub->player->size);
+	cast_ray(cub);
 }
+
+/*
+void	draw_player_direction(t_cub3d *cub)
+{
+	t_player	*p;
+	t_ray		*r;
+	t_pixel		start;
+	t_pixel 	end;
+
+	p = cub->player;
+	r = cub->ray;
+	printf("Angle ray: [%f] PLayer angle: [%f]\n", cub->ray->rangle, cub->player->rangle);
+	start = init_pixel(p->x, p->y, RED);
+	end = init_pixel(p->x + cos(r->rangle) * 50, \
+					p->y + sin(r->rangle) * 50, 
+					RED);
+	draw_line(cub, init_line(start, end));
+}
+*/

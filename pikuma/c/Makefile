@@ -6,7 +6,7 @@
 #    By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
-#    Updated: 2022/12/16 16:54:09 by sbeylot          ###   ########.fr        #
+#    Updated: 2022/12/18 10:02:17 by sbeylot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ SRCS_DIR	:=	srcs/
 SRCS_NAME	:=	main.c\
 				drawing.c\
 				drawing_line.c\
-				player.c
+				player.c\
+				map.c\
+				ray.c
 SRCS		:=	$(wildcard $(SRCS_DIR)*.c)
 
 OBJS_DIR	:=	objs/
@@ -30,7 +32,11 @@ OBJS		:=	$(addprefix $(OBJS_DIR), $(OBJS_NAME))
 DEPS		:=	$(addprefix	$(OBJS_DIR), $(SRCS_NAME:%.c=%.d))
 
 HEADER_DIR	:=	/includes/
-HEADER_NAME	:=	cub3d.h	
+HEADER_NAME	:=	cub3d.h\
+				player.h\
+				drawing.h\
+				map.h\
+				ray.h
 HEADER		:=	-I.$(HEADER_DIR)
 
 INCLUDE_LFT	:=	-L./libft -lft
