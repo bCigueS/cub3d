@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.h                                           :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/31 07:32:50 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 09:35:21 by sbeylot          ###   ########.fr       */
+/*   Created: 2023/01/02 10:16:50 by sbeylot           #+#    #+#             */
+/*   Updated: 2023/01/02 17:47:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAYER_H
-# define PLAYER_H
+#ifndef RAY_H
+# define RAY_H
 
-typedef struct s_player t_player;
+typedef struct	s_ray
+{
+	double		rangle;
+	bool		ray_down;
+	bool		ray_left;
+	int			xwallh;
+	int			xwallv;
+	int			ywallh;
+	int			ywallv;
+}				t_ray;
 
-t_player	*init_player(t_cub3d *cub);
-void		draw_player(t_cub3d *cub);
-void	update_player(t_cub3d *cub);
-
-bool	is_a_wall(t_cub3d *cub, int x, int y);
+t_ray	*init_ray(t_cub3d *cub);
+void	draw_ray(t_cub3d *cub);
+void	update_ray(t_cub3d *cub);
+bool	update_ray2(t_cub3d *cub);
+bool	update_ray3(t_cub3d *cub);
 
 #endif

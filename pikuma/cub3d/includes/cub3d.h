@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/12/31 09:10:13 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/02 14:27:38 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "clean.h"
 # include "drawing.h"
 # include "player.h"
+# include "ray.h"
 
 /* --- CONSTANT --- */
 # define MW 15
@@ -46,6 +47,7 @@
 # define KEY_ARROW_RIGHT 0xff53
 
 typedef struct s_player t_player;
+typedef struct s_ray	t_ray;
 
 typedef struct	s_img
 {
@@ -58,8 +60,8 @@ typedef struct	s_img
 
 typedef struct	s_player
 {
-	int			x;
-	int			y;
+	double			x;
+	double			y;
 	int			mspeed;
 	int			turn;
 	int			walk;
@@ -70,15 +72,6 @@ typedef struct	s_player
 	int			icon_h;
 	int			icon_w;
 }				t_player;
-	int	x;
-	int	y;
-	int	mspeed;
-	int	turn;
-	int	walk;
-	int	size;
-	double	rangle;
-	double	rspeed;
-
 
 typedef struct	s_cub3d
 {
@@ -86,6 +79,10 @@ typedef struct	s_cub3d
 	void		*win_ptr;
 	t_img		img;
 	t_player	*player;
+	int			**map;
+	t_ray		*ray;
 }				t_cub3d;
+
+void	render(t_cub3d *cub);
 
 #endif

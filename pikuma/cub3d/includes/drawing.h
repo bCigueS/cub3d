@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:55:25 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/12/31 08:58:19 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/02 17:47:45 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,32 @@ typedef struct	s_pixel
 	unsigned int			color;
 }				t_pixel;
 
+typedef struct	s_line {
+	t_pixel	p1;
+	t_pixel	p2;
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	xstep;
+	int	ystep;
+	int	err;
+	int	err2;
+	int color;
+}				t_line;
+
 void	draw_pixel(t_cub3d *cub, t_pixel p);
 void	draw_background(t_cub3d *cub);
 void	draw_rectangle(t_cub3d *cub,int tx, int ty, int size);
-void	draw_map(t_cub3d *cub, int map[MH][MW]);
+void	draw_rectangle2(t_cub3d *cub,int tx, int ty);
+void	draw_map(t_cub3d *cub);
+void	draw_grid(t_cub3d *cub);
+
+/* --- draw_line.c --- */
+
+
+void	draw_line(t_cub3d *cub, t_line line);
+t_line	init_line(t_pixel p1, t_pixel p2);
+t_pixel	init_pixel(int x, int y, int color);
 
 #endif

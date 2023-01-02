@@ -6,11 +6,24 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/12/31 09:03:50 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/02 11:54:49 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_map(int **map)
+{
+	int	y;
+
+	y = 0;
+	while (y < MH)
+	{
+		free(map[y]);
+		y++;
+	}
+	free(map);
+}
 
 void	clean_mlx(t_cub3d *cub)
 {
@@ -26,4 +39,6 @@ void	clean_mlx(t_cub3d *cub)
 	if (cub->mlx_ptr != NULL)
 		mlx_destroy_display(cub->mlx_ptr);
 	free(cub->mlx_ptr);
+	free_map(cub->map);
+	free(cub->ray);
 }
