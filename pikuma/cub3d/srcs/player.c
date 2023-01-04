@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 17:47:44 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 12:25:06 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,6 @@ void	draw_player(t_cub3d *cub)
 		}
 		y++;
 	}
-	cub->ray = init_ray(cub);
-	update_ray2(cub);
-	update_ray3(cub);
-	draw_ray(cub);
-	//while (!update_ray2(cub) && !update_ray3(cub));
 }
 
 t_player	*init_player(t_cub3d *cub)
@@ -90,15 +85,15 @@ t_player	*init_player(t_cub3d *cub)
 /*
  * Faire une fonction pour calculer le reste de distance a faire pour toucher le mur et conserver la vitess a 4 du joueur
  */
-bool	is_a_wall(t_cub3d *cub, int x, int y)
+bool	is_a_wall(t_cub3d *cub, double x, double y)
 {
 	int	mx;
 	int	my;
 
-	if ((x < 0 || x >= WINDOW_WIDTH) || (y < 0 || y >= WINDOW_HEIGHT))
+	if ((x < 0 || x > WINDOW_WIDTH) || (y < 0 || y > WINDOW_HEIGHT))
 		return (false);
-	mx = x / TILE_SIZE;
-	my = y / TILE_SIZE;
+	mx = floor(x / TILE_SIZE);
+	my = floor(y / TILE_SIZE);
 	if (cub->map[my][mx] == 1)
 		return (true);
 	return (false);
@@ -119,16 +114,39 @@ void	update_player(t_cub3d *cub)
 	else if (p->rangle >= 2 * M_PI) 
 		p->rangle = p->rangle - M_PI * 2;
 	move = p->walk * p->mspeed;
+	int			i;
+	i = p->walk;
+	while (abs(i) <= abs(move))
+	{
+		newx = p->x + cos(p->rangle) * i;
+		newy = p->y + sin(p->rangle) * i;
+		if (!is_a_wall(cub, newx, newy))
+		{
+			if (p->walk == -1)
+				i--;
+			else
+				i++;
+			p->x = newx;
+			p->y = newy;
+			if (i == move)
+				break;
+		}
+		else
+		{
+			break;
+		}
+	}
+	/*
 	newx = p->x + cos(p->rangle) * move;
 	newy = p->y + sin(p->rangle) * move;
-	printf("newx:[%f]\tnewy[%f]\n", newx, newy);
 	if (!is_a_wall(cub, newx, newy))
 	{
 		p->x = newx;
 		p->y = newy;
 	}
+	*/
+	update_ray(cub);
 	p->walk = 0;
 	p->turn = 0;
-	update_ray(cub);
 	render(cub);
 }

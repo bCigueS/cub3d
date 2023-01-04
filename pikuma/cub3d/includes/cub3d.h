@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 14:27:38 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 13:11:22 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define MH 15
 # define WINDOW_WIDTH MW * TILE_SIZE 
 # define WINDOW_HEIGHT MH * TILE_SIZE
+# define FOV 60 * (M_PI / 180)
+# define STRIP 1 
 
 /* --- MLX --- */
 # define KEY_PRESS 2
@@ -78,9 +80,11 @@ typedef struct	s_cub3d
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		img;
+	t_img		mini_map;
 	t_player	*player;
 	int			**map;
 	t_ray		*ray;
+	t_ray		**tab_ray;
 }				t_cub3d;
 
 void	render(t_cub3d *cub);

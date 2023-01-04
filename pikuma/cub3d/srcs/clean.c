@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 11:54:49 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/03 11:17:05 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ void	free_map(int **map)
 	free(map);
 }
 
+void	clean_rays(t_cub3d *cub)
+{
+	int i;
+
+	i = 0;
+	while (i < WINDOW_WIDTH / STRIP)
+		free(cub->tab_ray[i++]);
+	free(cub->tab_ray);
+}
+
 void	clean_mlx(t_cub3d *cub)
 {
 	if (cub->player != NULL)
@@ -40,5 +50,5 @@ void	clean_mlx(t_cub3d *cub)
 		mlx_destroy_display(cub->mlx_ptr);
 	free(cub->mlx_ptr);
 	free_map(cub->map);
-	free(cub->ray);
+	clean_rays(cub);
 }

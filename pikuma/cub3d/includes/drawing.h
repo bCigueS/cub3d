@@ -6,14 +6,14 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:55:25 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 17:47:45 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 12:28:15 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DRAWING_H
 # define DRAWING_H
 
-# define TILE_SIZE 32
+# define TILE_SIZE 32 
 
 # ifndef MW 
 #  define MW 15
@@ -47,7 +47,7 @@ typedef struct	s_line {
 	int	ystep;
 	int	err;
 	int	err2;
-	int color;
+	unsigned int color;
 }				t_line;
 
 void	draw_pixel(t_cub3d *cub, t_pixel p);

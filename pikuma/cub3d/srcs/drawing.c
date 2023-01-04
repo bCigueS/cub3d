@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:54:53 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 15:45:18 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 13:13:14 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	draw_pixel(t_cub3d *cub, t_pixel p)
 {
-	if ((p.x >= 0 || p.x < WINDOW_WIDTH) || (p.y >= 0 || p.y < WINDOW_HEIGHT))
+	if ((p.x >= 0 && p.x < WINDOW_WIDTH) && (p.y >= 0 && p.y < WINDOW_HEIGHT))
 		cub->img.addr[p.x + WINDOW_WIDTH * p.y] = p.color;
 }
 
@@ -44,15 +44,15 @@ void	draw_grid(t_cub3d *cub)
 	y = 0;
 	while (y < WINDOW_HEIGHT)
 	{
-		draw_line(cub, init_line(init_pixel(0, y, BLACK), \
-			init_pixel(WINDOW_WIDTH, y, BLACK)));
+		draw_line(cub, init_line(init_pixel(0, y, RED), \
+			init_pixel(WINDOW_WIDTH, y, RED)));
 		y += TILE_SIZE;
 	}
 	x = 0;
 	while (x < WINDOW_WIDTH)
 	{
-		draw_line(cub, init_line(init_pixel(x, 0, BLACK), \
-			init_pixel(x, WINDOW_HEIGHT, BLACK)));
+		draw_line(cub, init_line(init_pixel(x, 0, RED), \
+			init_pixel(x, WINDOW_HEIGHT, RED)));
 		x += TILE_SIZE;
 	}
 }
@@ -104,7 +104,7 @@ void	draw_map(t_cub3d *cub)
 		while (x < MW)
 		{
 			if (cub->map[y][x] == 1)
-				draw_rectangle(cub, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE);
+				draw_rectangle(cub, x * TILE_SIZE , y * TILE_SIZE, TILE_SIZE);
 			x++;
 		}
 		y++;

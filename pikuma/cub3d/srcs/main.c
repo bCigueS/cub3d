@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:07:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 17:47:47 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 12:23:38 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	handle_key(int keycode, void *param)
 void	render(t_cub3d *cub)
 {
 	draw_background(cub);
-	draw_grid(cub);
 	draw_map(cub);
 	draw_player(cub);
+	draw_rays(cub);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->img.img, 0, 0);
 }
 
@@ -87,6 +87,9 @@ bool	cub3d(t_cub3d *cub)
 	cub->player = init_player(cub);
 	if (cub->player == NULL)
 		return (clean_mlx(cub), false);
+	init_ray_tab(cub);
+	if (cub->tab_ray == NULL)
+		return (false);
 	mlx_hook(cub->win_ptr, EXIT, 0, &quit, cub);
 	mlx_hook(cub->win_ptr, KEY_PRESS, (1L<<0), &handle_key, cub);
 	render(cub);
@@ -126,13 +129,13 @@ int main(void)
 {
 	t_cub3d	cub;
 	int	map[MH][MW] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-					{1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-					{1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 1, 1, 80, 0, 0, 0, 0, 0, 0, 1},
+					{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 					{1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 					{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
 					{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 80, 0, 0, 1, 0, 0, 0, 1},
+					{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
 					{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
 					{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
 					{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},

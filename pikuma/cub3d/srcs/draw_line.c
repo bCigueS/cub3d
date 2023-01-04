@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:11:51 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/02 09:12:06 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 11:29:57 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_line	init_line(t_pixel p1, t_pixel p2)
 void	draw_line(t_cub3d *cub, t_line line)
 {
 	int err2;
+
 	while (1)
 	{
 		draw_pixel(cub, init_pixel(line.x, line.y, line.color));
