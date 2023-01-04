@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 13:11:22 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:11:57 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <time.h>
 # include "init_mlx.h"
+# include "event.h"
 # include "clean.h"
 # include "drawing.h"
 # include "player.h"
@@ -31,7 +32,7 @@
 # define MH 15
 # define WINDOW_WIDTH MW * TILE_SIZE 
 # define WINDOW_HEIGHT MH * TILE_SIZE
-# define FOV 60 * (M_PI / 180)
+# define FOV 50 * (M_PI / 180)
 # define STRIP 1 
 
 /* --- MLX --- */
@@ -58,6 +59,7 @@ typedef struct	s_img
 	int			bpp;
 	int			line_len;
 	int			endian;
+	double		ratio;
 }				t_img;
 
 typedef struct	s_player
@@ -67,6 +69,7 @@ typedef struct	s_player
 	int			mspeed;
 	int			turn;
 	int			walk;
+	double			straf;
 	int			size;
 	double		rangle;
 	double		rspeed;
@@ -86,7 +89,5 @@ typedef struct	s_cub3d
 	t_ray		*ray;
 	t_ray		**tab_ray;
 }				t_cub3d;
-
-void	render(t_cub3d *cub);
 
 #endif

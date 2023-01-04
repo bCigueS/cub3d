@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 12:25:06 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:13:24 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ static bool	player_get_position(t_cub3d *cub, t_player **player)
 
 void	draw_player(t_cub3d *cub)
 {
-	int x;
-	int y;
-	unsigned int color;
+	int				x;
+	int				y;
+	unsigned int	color;
+	double			ratio;
 
 	y = 0;
+	ratio = cub->mini_map.ratio;
 	while (y < cub->player->icon_h)
 	{
 		x = 0;
@@ -50,7 +52,9 @@ void	draw_player(t_cub3d *cub)
 		{
 			color = cub->player->img.addr[x + cub->player->icon_w * y];
 			if (color != 0xFF000000)
-				draw_pixel(cub, (t_pixel){x + cub->player->x - (15 / 2), y + cub->player->y - (15 / 2), RED});
+				draw_pixel(cub->mini_map, \
+						(t_pixel){(x + cub->player->x - (15 / 2)) * ratio, \
+						(y + cub->player->y - (15 / 2)) * ratio, RED});
 			x++;
 		}
 		y++;
@@ -67,24 +71,22 @@ t_player	*init_player(t_cub3d *cub)
 	player->mspeed = 4;
 	player->turn = 0;
 	player->walk = 0;
+	player->straf = 0;
 	player->rangle = M_PI / 2;
 	player->rspeed = 4 * (M_PI / 180);
 	if (player_get_position(cub, &player) == false)
 		return (free(player), NULL);
-	player->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/cercle.xpm", \
-			&player->icon_w, &player->icon_h);
+	player->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, \
+			"./sprites/cercle.xpm", &player->icon_w, &player->icon_h);
 	if (!player->img.img)
 		return (free(player), NULL);
-	player->img.addr = (int *)mlx_get_data_addr(player->img.img, &player->img.bpp, &player->img.line_len, \
-			&player->img.endian);
+	player->img.addr = (int *)mlx_get_data_addr(player->img.img, \
+			&player->img.bpp, &player->img.line_len, &player->img.endian);
 	if (cub->img.addr == NULL)
 		return (free(player->img.img), free(player), NULL);
 	return (player);
 }
 
-/*
- * Faire une fonction pour calculer le reste de distance a faire pour toucher le mur et conserver la vitess a 4 du joueur
- */
 bool	is_a_wall(t_cub3d *cub, double x, double y)
 {
 	int	mx;
@@ -99,6 +101,14 @@ bool	is_a_wall(t_cub3d *cub, double x, double y)
 	return (false);
 }
 
+void	normalise_angle(t_player *p)
+{
+	if (p->rangle < 0)
+		p->rangle = 2 * M_PI + p->rangle;
+	else if (p->rangle >= 2 * M_PI)
+		p->rangle = p->rangle - M_PI * 2;
+}
+
 void	update_player(t_cub3d *cub)
 {
 	t_player	*p;
@@ -108,11 +118,7 @@ void	update_player(t_cub3d *cub)
 
 	p = cub->player;
 	p->rangle += p->turn * p->rspeed;
-	/* Faire une fonction pour normalise l'angle */
-	if (p->rangle < 0)
-		p->rangle = 2 * M_PI + p->rangle;
-	else if (p->rangle >= 2 * M_PI) 
-		p->rangle = p->rangle - M_PI * 2;
+	normalise_angle(p);
 	move = p->walk * p->mspeed;
 	int			i;
 	i = p->walk;
@@ -148,5 +154,4 @@ void	update_player(t_cub3d *cub)
 	update_ray(cub);
 	p->walk = 0;
 	p->turn = 0;
-	render(cub);
 }

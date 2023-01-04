@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:11:51 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 11:29:57 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:48:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_line	init_line(t_pixel p1, t_pixel p2)
 	line.dx = line.p2.x - line.p1.x;
 	line.dy = line.p2.y - line.p1.y;
 	line.xstep = 1;
-	if (line.dx < 0)	
+	if (line.dx < 0)
 	{
 		line.xstep = -1;
 		line.dx = -line.dx;
@@ -49,15 +49,15 @@ t_line	init_line(t_pixel p1, t_pixel p2)
 	return (line);
 }
 
-void	draw_line(t_cub3d *cub, t_line line)
+void	draw_line(t_img img, t_line line)
 {
-	int err2;
+	int	err2;
 
 	while (1)
 	{
-		draw_pixel(cub, init_pixel(line.x, line.y, line.color));
+		draw_pixel(img, init_pixel(line.x, line.y, line.color));
 		if (line.x == line.p2.x && line.y == line.p2.y)
-			break;
+			break ;
 		err2 = 2 * line.err;
 		if (err2 > -line.dy)
 		{

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:19:20 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 12:26:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 13:52:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,13 @@ void	draw_ray(t_cub3d *cub, t_ray *r)
 		end.y = v_wall_hit.nexty;
 		r->distance = r->vertical_hit;
 	}
-	(void)end;
-	/*
-	draw_line(cub, init_line(init_pixel(cub->player->x, cub->player->y, RED), \
-			end));				
-			*/
+	draw_line(cub->mini_map, init_line(init_pixel( \
+					cub->player->x * cub->mini_map.ratio, \
+					cub->player->y * cub->mini_map.ratio,\
+					RED), \
+					init_pixel(end.x * cub->mini_map.ratio, \
+					end.y * cub->mini_map.ratio, \
+					RED)));				
 }
 
 void	draw_rays(t_cub3d *cub)
@@ -231,7 +233,7 @@ void	draw_3d(t_cub3d *cub)
 		while (j < next) {
 			t_pixel	start = init_pixel(j, WINDOW_HEIGHT / 2 - (wall_height / 2), RED);
 			t_pixel end = init_pixel(j, WINDOW_HEIGHT / 2 + (wall_height / 2), RED);
-			draw_line(cub, init_line(start, end));
+			draw_line(cub->img, init_line(start, end));
 			j++;
 		}
 	}

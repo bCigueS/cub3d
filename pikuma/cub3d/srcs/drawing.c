@@ -6,58 +6,41 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:54:53 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 13:13:14 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:12:07 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_pixel(t_cub3d *cub, t_pixel p)
+void	draw_pixel(t_img img, t_pixel p)
 {
-	if ((p.x >= 0 && p.x < WINDOW_WIDTH) && (p.y >= 0 && p.y < WINDOW_HEIGHT))
-		cub->img.addr[p.x + WINDOW_WIDTH * p.y] = p.color;
+	int	size;
+
+	size = WINDOW_WIDTH * img.ratio;
+	if ((p.x >= 0 && p.x < WINDOW_WIDTH * img.ratio) && \
+			(p.y >= 0 && p.y < WINDOW_HEIGHT * img.ratio))
+		img.addr[p.x + size * p.y] = p.color;
 }
 
-void	draw_background(t_cub3d *cub)
+void	draw_background(t_img img)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (y < WINDOW_HEIGHT)
+	while (y < WINDOW_HEIGHT * img.ratio)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < WINDOW_WIDTH * img.ratio)
 		{
-			draw_pixel(cub, (t_pixel){x, y, WHITE});
+			draw_pixel(img, (t_pixel){x, y, WHITE});
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_grid(t_cub3d *cub)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		draw_line(cub, init_line(init_pixel(0, y, RED), \
-			init_pixel(WINDOW_WIDTH, y, RED)));
-		y += TILE_SIZE;
-	}
-	x = 0;
-	while (x < WINDOW_WIDTH)
-	{
-		draw_line(cub, init_line(init_pixel(x, 0, RED), \
-			init_pixel(x, WINDOW_HEIGHT, RED)));
-		x += TILE_SIZE;
-	}
-}
-
-void	draw_rectangle(t_cub3d *cub,int tx, int ty, int size)
+void	draw_rectangle(t_img img, int tx, int ty, int size)
 {
 	int	x;
 	int	y;
@@ -68,34 +51,17 @@ void	draw_rectangle(t_cub3d *cub,int tx, int ty, int size)
 		x = tx;
 		while (x < tx + size)
 		{
-			draw_pixel(cub, (t_pixel){x, y, BLACK});
+			draw_pixel(img, (t_pixel){x, y, BLACK});
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_rectangle2(t_cub3d *cub,int tx, int ty)
+void	draw_map(t_cub3d *cub)
 {
 	int	x;
 	int	y;
-
-	y = ty - 3;
-	while (y < ty  + 3)
-	{
-		x = tx - 3;
-		while (x < tx + 3)
-		{
-			draw_pixel(cub, (t_pixel){x, y, RED});
-			x++;
-		}
-		y++;
-	}
-}
-void	draw_map(t_cub3d *cub)
-{
-	int x;
-	int y;
 
 	y = 0;
 	while (y < MH)
@@ -104,7 +70,10 @@ void	draw_map(t_cub3d *cub)
 		while (x < MW)
 		{
 			if (cub->map[y][x] == 1)
-				draw_rectangle(cub, x * TILE_SIZE , y * TILE_SIZE, TILE_SIZE);
+				draw_rectangle(cub->mini_map, \
+						x * TILE_SIZE * cub->mini_map.ratio, \
+						y * TILE_SIZE * cub->mini_map.ratio, \
+						TILE_SIZE * cub->mini_map.ratio);
 			x++;
 		}
 		y++;

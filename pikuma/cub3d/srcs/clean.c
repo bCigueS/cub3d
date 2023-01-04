@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/03 11:17:05 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:43:43 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_map(int **map)
 
 void	clean_rays(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < WINDOW_WIDTH / STRIP)
@@ -44,6 +44,8 @@ void	clean_mlx(t_cub3d *cub)
 	}
 	if (cub->img.img != NULL)
 		mlx_destroy_image(cub->mlx_ptr, cub->img.img);
+	if (cub->mini_map.img != NULL)
+		mlx_destroy_image(cub->mlx_ptr, cub->mini_map.img);
 	if (cub->win_ptr != NULL)
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
 	if (cub->mlx_ptr != NULL)

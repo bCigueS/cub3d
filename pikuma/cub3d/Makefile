@@ -6,7 +6,7 @@
 #    By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
-#    Updated: 2023/01/02 17:47:49 by sbeylot          ###   ########.fr        #
+#    Updated: 2023/01/04 14:37:51 by sbeylot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS_NAME	:=	main.c\
 				drawing.c\
 				draw_line.c\
 				ray.c\
-				player.c
+				player.c\
+				event.c
 SRCS		:=	$(wildcard $(SRCS_DIR)*.c)
 
 OBJS_DIR	:=	objs/
@@ -38,7 +39,8 @@ HEADER_NAME	:=	cub3d.h\
 				init_mlx.h\
 				drawing.h\
 				player.h\
-				ray.h
+				ray.h\
+				event.h
 HEADER		:=	-I.$(HEADER_DIR)
 
 INCLUDE_LFT	:=	-L./libft -lft
