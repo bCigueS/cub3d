@@ -6,7 +6,7 @@
 #    By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
-#    Updated: 2023/01/04 14:37:51 by sbeylot          ###   ########.fr        #
+#    Updated: 2023/01/06 09:37:54 by sbeylot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,11 @@ SRCS_NAME	:=	main.c\
 				drawing.c\
 				draw_line.c\
 				ray.c\
+				ray_intersection.c\
+				raycasting.c\
 				player.c\
-				event.c
+				event.c\
+				utils.c
 SRCS		:=	$(wildcard $(SRCS_DIR)*.c)
 
 OBJS_DIR	:=	objs/

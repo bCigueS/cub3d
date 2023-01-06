@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 15:11:57 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 10:41:51 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define WINDOW_WIDTH MW * TILE_SIZE 
 # define WINDOW_HEIGHT MH * TILE_SIZE
 # define FOV 50 * (M_PI / 180)
-# define STRIP 1 
+# define STRIP 1
 
 /* --- MLX --- */
 # define KEY_PRESS 2
@@ -69,7 +69,7 @@ typedef struct	s_player
 	int			mspeed;
 	int			turn;
 	int			walk;
-	double			straf;
+	double		straf;
 	int			size;
 	double		rangle;
 	double		rspeed;
@@ -83,11 +83,17 @@ typedef struct	s_cub3d
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		img;
-	t_img		mini_map;
+	t_img		mmap;
 	t_player	*player;
 	int			**map;
 	t_ray		*ray;
 	t_ray		**tab_ray;
 }				t_cub3d;
+
+/* --- utils.c --- */
+
+bool	is_a_wall(t_cub3d *cub, double x, double y);
+void	normalise_angle(t_player *p);
+double	line_len(t_player *p, double x, double y);
 
 #endif

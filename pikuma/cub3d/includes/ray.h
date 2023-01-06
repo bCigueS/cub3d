@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:16:50 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/03 15:26:45 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 09:50:37 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 
 # define LEFT 0
 # define DOWN 1
+
+typedef struct	s_rcinfo
+{
+	double 		fov;
+	double		halfwindow;
+	double		wall_projection_distance;
+	double		correct_distance;
+	double		wall_height;
+}				t_rcinfo;
+
 typedef struct s_wallh
 {
 	double	xintercept;
@@ -33,14 +43,20 @@ typedef struct	s_ray
 	double		horizontal_hit;
 	double		vertical_hit;
 	double		distance;
+	bool		is_horizontal_hit;
 }				t_ray;
 
+/* --- ray.c --- */
 void	init_ray_tab(t_cub3d *cub);
 t_ray	*init_ray(double angle);
 void	draw_rays(t_cub3d *cub);
-void	draw_ray(t_cub3d *cub, t_ray *r);
 void	update_ray(t_cub3d *cub);
 
-void	draw_3d(t_cub3d *cub);
+/* --- ray_intersection.c --- */
+void	draw_ray(t_cub3d *cub, t_ray *r);
+
+/* --- ray_casting.c --- */
+void	raycasting(t_cub3d *cub);
+
 
 #endif

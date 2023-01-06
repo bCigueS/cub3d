@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:54:53 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 16:12:07 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 11:09:23 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,34 @@ void	draw_map(t_cub3d *cub)
 		while (x < MW)
 		{
 			if (cub->map[y][x] == 1)
-				draw_rectangle(cub->mini_map, \
-						x * TILE_SIZE * cub->mini_map.ratio, \
-						y * TILE_SIZE * cub->mini_map.ratio, \
-						TILE_SIZE * cub->mini_map.ratio);
+				draw_rectangle(cub->mmap, \
+						x * TILE_SIZE * cub->mmap.ratio, \
+						y * TILE_SIZE * cub->mmap.ratio, \
+						TILE_SIZE * cub->mmap.ratio);
 			x++;
 		}
 		y++;
 	}
 }
+
+void	draw_ceiling_floor(t_cub3d *cub)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < WINDOW_HEIGHT)
+	{
+		x = 0;
+		while (x < WINDOW_WIDTH)
+		{
+			if (y < WINDOW_HEIGHT / 2)
+				draw_pixel(cub->img, (t_pixel){x, y, CEILLING});
+			else
+				draw_pixel(cub->img, (t_pixel){x, y, FLOOR});
+			x++;
+		}
+		y++;
+	}
+}
+

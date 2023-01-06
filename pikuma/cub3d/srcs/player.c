@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 16:13:24 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 09:10:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,31 @@ static bool	player_get_position(t_cub3d *cub, t_player **player)
 	return (false);
 }
 
+static void	update_player_walk(t_cub3d *cub, t_player *p, int move, int i)
+{
+	double	newx;
+	double	newy;
+
+	while (abs(i) <= abs(move))
+	{
+		newx = p->x + cos(p->rangle) * i;
+		newy = p->y + sin(p->rangle) * i;
+		if (!is_a_wall(cub, newx, newy))
+		{
+			if (p->walk == -1)
+				i--;
+			else
+				i++;
+			p->x = newx;
+			p->y = newy;
+			if (i == move)
+				break ;
+		}
+		else
+			break ;
+	}
+}
+
 void	draw_player(t_cub3d *cub)
 {
 	int				x;
@@ -44,7 +69,7 @@ void	draw_player(t_cub3d *cub)
 	double			ratio;
 
 	y = 0;
-	ratio = cub->mini_map.ratio;
+	ratio = cub->mmap.ratio;
 	while (y < cub->player->icon_h)
 	{
 		x = 0;
@@ -52,7 +77,7 @@ void	draw_player(t_cub3d *cub)
 		{
 			color = cub->player->img.addr[x + cub->player->icon_w * y];
 			if (color != 0xFF000000)
-				draw_pixel(cub->mini_map, \
+				draw_pixel(cub->mmap, \
 						(t_pixel){(x + cub->player->x - (15 / 2)) * ratio, \
 						(y + cub->player->y - (15 / 2)) * ratio, RED});
 			x++;
@@ -87,70 +112,16 @@ t_player	*init_player(t_cub3d *cub)
 	return (player);
 }
 
-bool	is_a_wall(t_cub3d *cub, double x, double y)
-{
-	int	mx;
-	int	my;
-
-	if ((x < 0 || x > WINDOW_WIDTH) || (y < 0 || y > WINDOW_HEIGHT))
-		return (false);
-	mx = floor(x / TILE_SIZE);
-	my = floor(y / TILE_SIZE);
-	if (cub->map[my][mx] == 1)
-		return (true);
-	return (false);
-}
-
-void	normalise_angle(t_player *p)
-{
-	if (p->rangle < 0)
-		p->rangle = 2 * M_PI + p->rangle;
-	else if (p->rangle >= 2 * M_PI)
-		p->rangle = p->rangle - M_PI * 2;
-}
-
 void	update_player(t_cub3d *cub)
 {
 	t_player	*p;
 	int			move;
-	double		newx;
-	double		newy;
 
 	p = cub->player;
 	p->rangle += p->turn * p->rspeed;
 	normalise_angle(p);
 	move = p->walk * p->mspeed;
-	int			i;
-	i = p->walk;
-	while (abs(i) <= abs(move))
-	{
-		newx = p->x + cos(p->rangle) * i;
-		newy = p->y + sin(p->rangle) * i;
-		if (!is_a_wall(cub, newx, newy))
-		{
-			if (p->walk == -1)
-				i--;
-			else
-				i++;
-			p->x = newx;
-			p->y = newy;
-			if (i == move)
-				break;
-		}
-		else
-		{
-			break;
-		}
-	}
-	/*
-	newx = p->x + cos(p->rangle) * move;
-	newy = p->y + sin(p->rangle) * move;
-	if (!is_a_wall(cub, newx, newy))
-	{
-		p->x = newx;
-		p->y = newy;
-	}
-	*/
+	update_player_walk(cub, p, move, p->walk);
 	update_ray(cub);
 	p->walk = 0;
 	p->turn = 0;

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:04:07 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 16:06:29 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 11:04:09 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static bool	init_mini_map(t_cub3d *cub)
 {
-	cub->mini_map.ratio = 0.3;
-	cub->mini_map.img = mlx_new_image(cub->mlx_ptr, \
-			WINDOW_WIDTH * cub->mini_map.ratio, \
-			WINDOW_HEIGHT * cub->mini_map.ratio);
-	if (cub->mini_map.img == NULL)
+	cub->mmap.ratio = 0.3;
+	cub->mmap.img = mlx_new_image(cub->mlx_ptr, \
+			WINDOW_WIDTH * cub->mmap.ratio, \
+			WINDOW_HEIGHT * cub->mmap.ratio);
+	if (cub->mmap.img == NULL)
 		return (clean_mlx(cub), false);
-	cub->mini_map.addr = (int *)mlx_get_data_addr(cub->mini_map.img, \
-			&cub->mini_map.bpp, \
-			&cub->mini_map.line_len, \
-			&cub->mini_map.endian);
-	if (cub->mini_map.addr == NULL)
+	cub->mmap.addr = (int *)mlx_get_data_addr(cub->mmap.img, \
+			&cub->mmap.bpp, \
+			&cub->mmap.line_len, \
+			&cub->mmap.endian);
+	if (cub->mmap.addr == NULL)
 		return (clean_mlx(cub), false);
 	return (true);
 }
@@ -51,7 +51,7 @@ bool	init_mlx(t_cub3d *cub)
 	cub->mlx_ptr = NULL;
 	cub->win_ptr = NULL;
 	cub->img.img = NULL;
-	cub->mini_map.img = NULL;
+	cub->mmap.img = NULL;
 	cub->player = NULL;
 	cub->mlx_ptr = mlx_init();
 	if (cub->mlx_ptr == NULL)

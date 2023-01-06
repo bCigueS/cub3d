@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/04 15:43:43 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 09:11:46 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	clean_mlx(t_cub3d *cub)
 	}
 	if (cub->img.img != NULL)
 		mlx_destroy_image(cub->mlx_ptr, cub->img.img);
-	if (cub->mini_map.img != NULL)
-		mlx_destroy_image(cub->mlx_ptr, cub->mini_map.img);
+	if (cub->mmap.img != NULL)
+		mlx_destroy_image(cub->mlx_ptr, cub->mmap.img);
 	if (cub->win_ptr != NULL)
 		mlx_destroy_window(cub->mlx_ptr, cub->win_ptr);
 	if (cub->mlx_ptr != NULL)
