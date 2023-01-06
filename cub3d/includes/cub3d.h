@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 10:41:51 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:19:02 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define WINDOW_WIDTH MW * TILE_SIZE 
 # define WINDOW_HEIGHT MH * TILE_SIZE
 # define FOV 50 * (M_PI / 180)
-# define STRIP 1
+# define STRIP 1 
 
 /* --- MLX --- */
 # define KEY_PRESS 2

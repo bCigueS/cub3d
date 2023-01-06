@@ -6,14 +6,14 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:55:25 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 11:13:03 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:15:31 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DRAWING_H
 # define DRAWING_H
 
-# define TILE_SIZE 32 
+# define TILE_SIZE 64 
 
 # ifndef MW 
 #  define MW 15
