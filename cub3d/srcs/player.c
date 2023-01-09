@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 09:10:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/09 11:15:27 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_player	*init_player(t_cub3d *cub)
 	player->turn = 0;
 	player->walk = 0;
 	player->straf = 0;
-	player->rangle = M_PI / 2;
+	player->rangle = 1.5 * M_PI;
 	player->rspeed = 4 * (M_PI / 180);
 	if (player_get_position(cub, &player) == false)
 		return (free(player), NULL);

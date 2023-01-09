@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 09:11:46 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/09 09:32:03 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	clean_rays(t_cub3d *cub)
 
 void	clean_mlx(t_cub3d *cub)
 {
+	if (cub->texture != NULL)
+		free(cub->texture);
 	if (cub->player != NULL)
 	{
 		mlx_destroy_image(cub->mlx_ptr, cub->player->img.img);

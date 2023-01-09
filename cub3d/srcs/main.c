@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:07:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 11:13:20 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/09 11:13:49 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool	cub3d(t_cub3d *cub)
 		return (false);
 	mlx_hook(cub->win_ptr, EXIT, 0, &quit, cub);
 	mlx_hook(cub->win_ptr, KEY_PRESS, (1L << 0), handle_key, cub);
+	render((void *)cub);
 	mlx_loop_hook(cub->mlx_ptr, render, cub);
 	mlx_loop(cub->mlx_ptr);
 	return (true);

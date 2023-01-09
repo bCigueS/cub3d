@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 15:19:02 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/09 12:21:58 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define WINDOW_WIDTH MW * TILE_SIZE 
 # define WINDOW_HEIGHT MH * TILE_SIZE
 # define FOV 50 * (M_PI / 180)
-# define STRIP 1 
+# define STRIP 1
 
 /* --- MLX --- */
 # define KEY_PRESS 2
@@ -62,6 +62,14 @@ typedef struct	s_img
 	double		ratio;
 }				t_img;
 
+typedef struct	s_texture
+{
+	char		orientation;
+	t_img		img;
+	int			icon_w;
+	int			icon_h;
+}				t_texture;
+
 typedef struct	s_player
 {
 	double			x;
@@ -86,8 +94,8 @@ typedef struct	s_cub3d
 	t_img		mmap;
 	t_player	*player;
 	int			**map;
-	t_ray		*ray;
 	t_ray		**tab_ray;
+	t_texture	*texture;
 }				t_cub3d;
 
 /* --- utils.c --- */

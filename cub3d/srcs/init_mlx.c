@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:04:07 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 11:04:09 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/09 12:30:37 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,58 @@ static bool	init_img(t_cub3d *cub)
 	return (true);
 }
 
+static void	init_texture(t_cub3d *cub)
+{
+	int	i;
+	cub->texture[0].orientation = 'N';
+	cub->texture[1].orientation = 'S';
+	cub->texture[2].orientation = 'E';
+	cub->texture[3].orientation = 'W';
+
+	cub->texture[0].img.img = \
+				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/vent1.xpm", \
+						&cub->texture[0].icon_w, &cub->texture[0].icon_h);
+	cub->texture[1].img.img = \
+				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/wall1.xpm", \
+						&cub->texture[1].icon_w, &cub->texture[1].icon_h);
+	cub->texture[2].img.img = \
+				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/window.xpm", \
+						&cub->texture[2].icon_w, &cub->texture[2].icon_h);
+	cub->texture[3].img.img = \
+				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/crate1.xpm", \
+						&cub->texture[3].icon_w, &cub->texture[3].icon_h);
+	i = 0;
+	while (i < 4)
+	{
+		cub->texture[i].img.addr =(int *)mlx_get_data_addr(\
+				cub->texture[i].img.img, \
+				&cub->texture[i].img.bpp, \
+				&cub->texture[i].img.line_len, \
+				&cub->texture[i].img.endian);
+		i++;
+	}
+}
+
+static void	init_textures(t_cub3d *cub)
+{
+	cub->texture = (t_texture *)malloc(sizeof(t_texture) * 4);
+	if (!cub->texture)
+		return (clean_mlx(cub));
+	init_texture(cub);
+	/*
+	tex = cub->texture;
+	tex->orientation = 'S';
+	tex->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, \
+			"./sprites/vent1.xpm", &tex->icon_w, &tex->icon_h);
+	if (!tex->img.img)
+		return (NULL);
+	tex->img.addr = (int *)mlx_get_data_addr(tex->img.img, \
+			&tex->img.bpp, &tex->img.line_len, &tex->img.endian);
+	if (tex->img.addr == NULL)
+		return (free(tex->img.img), NULL);
+		*/
+}
+
 bool	init_mlx(t_cub3d *cub)
 {
 	cub->mlx_ptr = NULL;
@@ -53,6 +105,7 @@ bool	init_mlx(t_cub3d *cub)
 	cub->img.img = NULL;
 	cub->mmap.img = NULL;
 	cub->player = NULL;
+	cub->texture = NULL;
 	cub->mlx_ptr = mlx_init();
 	if (cub->mlx_ptr == NULL)
 		return (false);
@@ -64,5 +117,10 @@ bool	init_mlx(t_cub3d *cub)
 		return (clean_mlx(cub), false);
 	if (!init_img(cub))
 		return (clean_mlx(cub), false);
+	init_textures(cub);
+	if (cub->texture == NULL)
+		return (clean_mlx(cub), false);
 	return (true);
 }
+
+
