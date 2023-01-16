@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/09 12:31:56 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/16 11:55:40 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ static void	raycasting_draw_wall_texture(t_cub3d *cub, t_rcinfo rci, t_ray *r, i
 		{
 			draw_pixel(cub->img, init_pixel(*pi, (WINDOW_HEIGHT / 2 - (rci.wall_height / 2)) + y, \
 			choose_color(cub, rci, r, y)));
-			//printf("Texture_Color[%d]\n", texture_color(cub, rci, r, y));
 			y += 1;
 		}
 		*pi += 1;
