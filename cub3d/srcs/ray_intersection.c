@@ -6,12 +6,13 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:22:19 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/09 10:36:40 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 10:44:26 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
 static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
 {
 	wh->nextx = wh->xintercept;
@@ -31,6 +32,28 @@ static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
 				wh->nexty++;
 			else if (direction == LEFT && r->ray_left)
 				wh->nextx++;
+			wh->nextx += wh->xstep;
+			wh->nexty += wh->ystep;
+		}
+	}
+	return (false);
+}
+*/
+static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
+{
+	wh->nextx = wh->xintercept;
+	wh->nexty = wh->yintercept;
+	while (wh->nextx >= 0 && wh->nextx <= WINDOW_WIDTH && wh->nexty >= 0 && \
+			wh->nexty <= WINDOW_HEIGHT)
+	{
+		if ((direction == DOWN && !r->ray_down) && is_a_wall(cub, wh->nextx, wh->nexty - 1))
+			return (true);
+		else if ((direction == LEFT && r->ray_left) && is_a_wall(cub, wh->nextx - 1, wh->nexty))
+			return (true);
+		else if (is_a_wall(cub, wh->nextx, wh->nexty))
+			return (true);
+		else
+		{
 			wh->nextx += wh->xstep;
 			wh->nexty += wh->ystep;
 		}

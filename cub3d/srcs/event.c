@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:35:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/12 15:53:18 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 11:26:07 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,12 @@ static void	straf(t_player *p, t_cub3d *cub, double straf)
 	double		newy;
 
 	i = p->walk;
-	while (abs(i) <= abs(p->mspeed))
+	newx = p->x + cos(straf) * (p->mspeed + 2);
+	newy = p->y + sin(straf) * (p->mspeed + 2);
+	if (!(is_a_wall(cub, newx, newy)))
 	{
-		newx = p->x + cos(straf) * i;
-		newy = p->y + sin(straf) * i;
-		if (!is_a_wall(cub, newx, newy))
-		{
-			if (p->walk == -1)
-				i--;
-			else
-				i++;
-			p->x = newx;
-			p->y = newy;
-			if (i == p->mspeed)
-				break ;
-		}
-		else
-			break ;
+		p->x = newx;
+		p->y = newy;
 	}
 }
 

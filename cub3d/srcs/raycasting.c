@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/16 11:55:40 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:06:59 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static void	raycasting_draw_wall(t_cub3d *cub, t_rcinfo rci, t_ray *r, int *pi)
 }
 */
 
-
+/*
+*/
 static unsigned int texture_color_vertical(t_cub3d *cub, t_rcinfo rci, t_ray *r, int y_coo)
 {
 	t_texture	*tex;
@@ -74,8 +75,7 @@ static unsigned int texture_color_vertical(t_cub3d *cub, t_rcinfo rci, t_ray *r,
 	if (tex_x >= 0 && tex_x < tex->icon_w && tex_y >= 0 && tex_y < tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
-		return (tex->img.addr[tex_x - 1 + tex->icon_w * tex_y - 1]);
-		//return (0x000000);
+		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
 }
 
 static unsigned int texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, t_ray *r, int y_coo)
@@ -100,8 +100,7 @@ static unsigned int texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, t_ray *
 	if (tex_x >= 0 && tex_x < tex->icon_w && tex_y >= 0 && tex_y < tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
-		return (tex->img.addr[tex_x - 1 + tex->icon_w * tex_y - 1]);
-		//return (0x000000);
+		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
 }
 static unsigned int	choose_color(t_cub3d *cub, t_rcinfo rci, t_ray *r, int y_coo)
 {

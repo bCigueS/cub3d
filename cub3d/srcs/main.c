@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:07:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:47 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 10:48:54 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ int	render(void *param)
 
 	cub = (t_cub3d *)param;
 	mlx_clear_window(cub->mlx_ptr, cub->win_ptr);
-	draw_background(cub->mmap);
-	draw_background(cub->img);
 	draw_ceiling_floor(cub);
+	draw_background(cub->mmap);
 	draw_map(cub);
 	draw_player(cub);
 	draw_rays(cub);

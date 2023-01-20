@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:05:28 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/12 15:54:58 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:05:31 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,24 @@ void	normalise_angle(t_player *p)
 		p->rangle = p->rangle - M_PI * 2;
 }
 
+double	normalise_angle2(double angle)
+{
+	double	norm_angle;
+
+	norm_angle = angle;
+	if (angle < 0)
+		norm_angle = 2 * M_PI + angle;
+	else if (angle >= 2 * M_PI)
+		norm_angle = angle - M_PI * 2;
+	return (norm_angle);
+}
+
+
 double	line_len(t_player *p, double x, double y)
 {
 	double	distance;
 
 	distance = (x - p->x) * (x - p->x) + (y - p->y) * (y - p->y);
-	distance = floor(sqrt(distance));
+	distance = sqrt(distance);
 	return (distance);
 }

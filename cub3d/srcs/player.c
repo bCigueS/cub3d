@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/16 11:54:50 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 11:26:35 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static bool	player_get_position(t_cub3d *cub, t_player **player)
 	return (false);
 }
 
+
 static void	update_player_walk(t_cub3d *cub, t_player *p, int move, int i)
 {
 	double	newx;
@@ -58,12 +59,21 @@ static void	update_player_walk(t_cub3d *cub, t_player *p, int move, int i)
 		}
 		else 
 		{
-			p->x = p->x - cos(p->rangle);
-			p->y = p->y - sin(p->rangle);
+			if (p->walk == 1)
+			{
+				p->x = p->x - cos(p->rangle);
+				p->y = p->y - sin(p->rangle);
+			}
+			else
+			{
+				p->x = p->x + cos(p->rangle);
+				p->y = p->y + sin(p->rangle);
+			}
 			break ;
 		}
 	}
 }
+
 
 void	draw_player(t_cub3d *cub)
 {

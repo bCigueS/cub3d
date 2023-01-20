@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:19:20 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/06 09:53:40 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:07:19 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ t_ray	*init_ray(double angle)
 	if (!r)
 		return (NULL);
 	r->rangle = angle;
-	if (r->rangle > 0 && r->rangle <= M_PI)
+	if (r->rangle > 0 && r->rangle < M_PI)
 		r->ray_down = true;
 	else
 		r->ray_down = false;
-	if (r->rangle <= (M_PI + M_PI / 2) && r->rangle >= M_PI / 2)
-		r->ray_left = true;
-	else
+	if (r->rangle < 0.5 * M_PI || r->rangle > 1.5 * M_PI)
 		r->ray_left = false;
+	else
+		r->ray_left = true;
 	return (r);
 }
 
@@ -63,18 +63,15 @@ void	update_ray(t_cub3d *cub)
 	{
 		r = cub->tab_ray[i++];
 		r->rangle += cub->player->turn * cub->player->rspeed;
-		if (r->rangle < 0)
-			r->rangle = 2 * M_PI + r->rangle;
-		else if (r->rangle >= 2 * M_PI)
-			r->rangle = r->rangle - M_PI * 2;
+		r->rangle = normalise_angle2(r->rangle);
 		if (r->rangle > 0 && r->rangle < M_PI)
 			r->ray_down = true;
 		else
 			r->ray_down = false;
-		if (r->rangle <= (M_PI + M_PI / 2) && r->rangle >= M_PI / 2)
-			r->ray_left = true;
-		else
+		if (r->rangle < 0.5 * M_PI || r->rangle > 1.5 * M_PI)
 			r->ray_left = false;
+		else
+			r->ray_left = true;
 	}
 }
 
