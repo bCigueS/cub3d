@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 10:51:54 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:00:01 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	clean_texture(t_cub3d *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[1].img.img);
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[2].img.img);
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[3].img.img);
+	mlx_destroy_image(cub->mlx_ptr, cub->texture[4].img.img);
 	free(cub->texture);
 }
 

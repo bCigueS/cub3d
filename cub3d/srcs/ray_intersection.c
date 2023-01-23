@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:22:19 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 12:05:37 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:29:52 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,42 @@ static t_pixel	assign_hit(t_cub3d *cub, t_ray *r, t_wallh *hwh, t_wallh *vwh)
 	return (end);
 }
 
+void	colission_index(t_ray *r)
+{
+	int	x;
+	int	y;
+
+	if (!r->ray_down && r->is_horizontal_hit)
+	{
+		y = floor((r->end.y - 1) / TILE_SIZE);
+		x = floor(r->end.x / TILE_SIZE);
+	}
+	else if (r->ray_down && r->is_horizontal_hit)
+	{
+		y = floor(r->end.y / TILE_SIZE);
+		x = floor(r->end.x / TILE_SIZE);
+	}
+	else if (r->ray_left && !r->is_horizontal_hit)
+	{
+		y = floor(r->end.y / TILE_SIZE);
+		x = floor((r->end.x - 1) / TILE_SIZE);
+	}
+	else 
+	{
+		y = floor(r->end.y / TILE_SIZE);
+		x = floor(r->end.x / TILE_SIZE);
+	}
+	r->wh_index_y = y;
+	r->wh_index_x = x;
+}
+
 void	draw_ray(t_cub3d *cub, t_ray *r)
 {
 	t_wallh	h_wall_hit;
 	t_wallh	v_wall_hit;
 
 	r->end = assign_hit(cub, r, &h_wall_hit, &v_wall_hit);
+	colission_index(r);
 	r->end.color = RED;
 	draw_line(cub, init_line(init_pixel(\
 					cub->player->x * cub->mmap.ratio, \

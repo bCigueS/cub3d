@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 12:37:57 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 17:30:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define KEY_S 0x73
 # define KEY_ARROW_LEFT 0xff51
 # define KEY_ARROW_RIGHT 0xff53
+# define KEY_SPACE 0x20
 
 typedef struct s_player	t_player;
 typedef struct s_ray	t_ray;
@@ -107,6 +108,8 @@ typedef struct s_cub3d
 	int			**map;
 	t_ray		**tab_ray;
 	t_texture	*texture;
+	t_texture	*door;
+	t_texture	*door_to_show;
 	t_info		info;
 }				t_cub3d;
 

@@ -6,11 +6,47 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 12:28:10 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 17:36:10 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/*
+void	choose_color(t_ray *r, t_pixel *start, t_pixel *end)
+{
+	unsigned int color;
+	if (r->is_horizontal_hit && r->ray_down)
+		color = RED;
+	else if (r->is_horizontal_hit && !r->ray_down)
+		color = GREEN;
+	else if (!r->is_horizontal_hit && r->ray_left)
+		color = BLUE;
+	else if (!r->is_horizontal_hit && !r->ray_left)
+		color = GOLD;
+	else 
+		color = BLACK;
+	start->color = color;
+	end->color = color;
+}
+void	raycasting_draw_wall(t_cub3d *cub, t_rcinfo rci, t_ray *r, int *pi)
+{
+	int		next;
+	t_pixel	start;
+	t_pixel	end;
+	next = *pi + STRIP;
+	choose_color(r, &start, &end);
+	while (*pi < next)
+	{
+		start = init_pixel(*pi, WINDOW_HEIGHT / 2 - (rci.wall_height / 2), \
+				start.color);
+		end = init_pixel(*pi, WINDOW_HEIGHT / 2 + (rci.wall_height / 2), \
+				end.color);
+		draw_line2(cub, init_line(start, end));
+		*pi += 1;
+	}
+}
+*/
 
 static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci, \
 		t_ray *r, int y_coo)
@@ -19,7 +55,9 @@ static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci, \
 	unsigned int			tex_x;
 	unsigned int			tex_y;
 
-	if (!r->is_horizontal_hit && r->ray_left)
+	if (cub->map[r->wh_index_y][r->wh_index_x] == 68)
+		tex = cub->door_to_show; 
+	else if (!r->is_horizontal_hit && r->ray_left)
 		tex = &cub->texture[2];
 	else
 		tex = &cub->texture[3];
@@ -42,7 +80,9 @@ static unsigned int	texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, \
 	unsigned int			tex_x;
 	unsigned int			tex_y;
 
-	if (r->is_horizontal_hit && r->ray_down)
+	if (cub->map[r->wh_index_y][r->wh_index_x] == 68)
+		tex = cub->door_to_show;
+	else if (r->is_horizontal_hit && r->ray_down)
 		tex = &cub->texture[1];
 	else
 		tex = &cub->texture[0];
@@ -96,7 +136,6 @@ static void	raycasting_draw_wall_texture(t_cub3d *cub, t_rcinfo rci, \
 		*pi += 1;
 	}
 }
-
 void	raycasting(t_cub3d *cub)
 {
 	int			i;
@@ -116,6 +155,7 @@ void	raycasting(t_cub3d *cub)
 							r->distance;
 		rayc.wall_height = (TILE_SIZE / rayc.correct_distance) * \
 							rayc.wall_projection_distance;
+		//raycasting_draw_wall(cub, rayc, r, &pixel_index);
 		raycasting_draw_wall_texture(cub, rayc, r, &pixel_index);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:55:25 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 12:38:11 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:46:53 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,9 @@ void	draw_ceiling_floor(t_cub3d *cub);
 void	draw_line(t_cub3d *cub, t_line line);
 t_line	init_line(t_pixel p1, t_pixel p2);
 t_pixel	init_pixel(int x, int y, int color);
+
+
+
+void	draw_line2(t_cub3d *cub, t_line line);
 
 #endif

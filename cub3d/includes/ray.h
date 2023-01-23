@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:16:50 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 10:31:35 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:05:28 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_ray
 	double		distance;
 	bool		is_horizontal_hit;
 	t_pixel		end;
+	int			wh_index_y;
+	int			wh_index_x;
 }				t_ray;
 
 /* --- ray.c --- */
