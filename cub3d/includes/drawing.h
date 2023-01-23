@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:55:25 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 10:51:47 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:38:11 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,8 @@
 # define DRAWING_H
 
 # define TILE_SIZE 64 
-
-# ifndef MW 
-#  define MW 15
-# endif
-
-# ifndef MH 
-#  define MH 15
-# endif
-
+# define WINDOW 1
+# define MINI_MAP 2
 
 /* --- COLOR --- */
 # define RED 0xFF0000
@@ -34,40 +27,37 @@
 # define CEILLING 0xE3DACB
 # define FLOOR 0xD1CC99
 
-
-
-typedef struct s_img t_img;
-typedef struct	s_pixel
+typedef struct s_img	t_img;
+typedef struct s_pixel
 {
-	int			x;
-	int			y;
-	unsigned int			color;
-}				t_pixel;
+	int				x;
+	int				y;
+	unsigned int	color;
+}					t_pixel;
 
-typedef struct	s_line {
-	t_pixel	p1;
-	t_pixel	p2;
-	int	x;
-	int	y;
-	int	dx;
-	int	dy;
-	int	xstep;
-	int	ystep;
-	int	err;
-	int	err2;
-	unsigned int color;
-}				t_line;
+typedef struct s_line {
+	t_pixel			p1;
+	t_pixel			p2;
+	unsigned int	x;
+	unsigned int	y;
+	int				dx;
+	int				dy;
+	int				xstep;
+	int				ystep;
+	int				err;
+	int				err2;
+	unsigned int	color;
+}					t_line;
 
-void	draw_pixel(t_img img, t_pixel p);
-void	draw_background(t_img img);
-void	draw_rectangle(t_img img,int tx, int ty, int size);
+void	draw_pixel(t_cub3d *cub, t_pixel p, int option);
+void	draw_background(t_cub3d *cub);
+void	draw_rectangle(t_cub3d *cub, int tx, int ty, int size);
 void	draw_map(t_cub3d *cub);
 void	draw_ceiling_floor(t_cub3d *cub);
 
 /* --- draw_line.c --- */
 
-
-void	draw_line(t_img img, t_line line);
+void	draw_line(t_cub3d *cub, t_line line);
 t_line	init_line(t_pixel p1, t_pixel p2);
 t_pixel	init_pixel(int x, int y, int color);
 

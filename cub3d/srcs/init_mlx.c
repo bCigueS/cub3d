@@ -6,18 +6,29 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:04:07 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 11:28:03 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:33:54 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+double	get_minimap_ratio(t_cub3d *cub)
+{
+	double ratio;
+
+	if (cub->info.map_dim_w > cub->info.map_dim_h)
+		ratio = (WINDOW_WIDTH * 30) / cub->info.map_dim_w;
+	else
+		ratio = (WINDOW_HEIGHT * 30) / cub->info.map_dim_h;
+	return (ratio / 100);
+}
+
 static bool	init_mini_map(t_cub3d *cub)
 {
-	cub->mmap.ratio = 0.3;
+	cub->mmap.ratio = get_minimap_ratio(cub);
 	cub->mmap.img = mlx_new_image(cub->mlx_ptr, \
-			WINDOW_WIDTH * cub->mmap.ratio, \
-			WINDOW_HEIGHT * cub->mmap.ratio);
+			cub->info.map_dim_w * cub->mmap.ratio, \
+			cub->info.map_dim_h * cub->mmap.ratio);
 	if (cub->mmap.img == NULL)
 		return (clean_mlx(cub), false);
 	cub->mmap.addr = (int *)mlx_get_data_addr(cub->mmap.img, \
@@ -49,11 +60,11 @@ static bool	init_img(t_cub3d *cub)
 static void	init_texture(t_cub3d *cub)
 {
 	int	i;
+
 	cub->texture[0].orientation = 'N';
 	cub->texture[1].orientation = 'S';
 	cub->texture[2].orientation = 'E';
 	cub->texture[3].orientation = 'W';
-
 	cub->texture[0].img.img = \
 				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/vent1.xpm", \
 						&cub->texture[0].icon_w, &cub->texture[0].icon_h);
@@ -69,11 +80,9 @@ static void	init_texture(t_cub3d *cub)
 	i = 0;
 	while (i < 4)
 	{
-		cub->texture[i].img.addr =(int *)mlx_get_data_addr(\
-				cub->texture[i].img.img, \
-				&cub->texture[i].img.bpp, \
-				&cub->texture[i].img.line_len, \
-				&cub->texture[i].img.endian);
+		cub->texture[i].img.addr = (int *)mlx_get_data_addr(\
+				cub->texture[i].img.img, &cub->texture[i].img.bpp, \
+				&cub->texture[i].img.line_len, &cub->texture[i].img.endian);
 		i++;
 	}
 }
@@ -84,18 +93,6 @@ static void	init_textures(t_cub3d *cub)
 	if (!cub->texture)
 		return (clean_mlx(cub));
 	init_texture(cub);
-	/*
-	tex = cub->texture;
-	tex->orientation = 'S';
-	tex->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, \
-			"./sprites/vent1.xpm", &tex->icon_w, &tex->icon_h);
-	if (!tex->img.img)
-		return (NULL);
-	tex->img.addr = (int *)mlx_get_data_addr(tex->img.img, \
-			&tex->img.bpp, &tex->img.line_len, &tex->img.endian);
-	if (tex->img.addr == NULL)
-		return (free(tex->img.img), NULL);
-		*/
 }
 
 bool	init_mlx(t_cub3d *cub)
@@ -106,6 +103,7 @@ bool	init_mlx(t_cub3d *cub)
 	cub->mmap.img = NULL;
 	cub->player = NULL;
 	cub->texture = NULL;
+	cub->tab_ray = NULL;
 	cub->mlx_ptr = mlx_init();
 	if (cub->mlx_ptr == NULL)
 		return (false);
@@ -122,5 +120,3 @@ bool	init_mlx(t_cub3d *cub)
 		return (clean_mlx(cub), false);
 	return (true);
 }
-
-

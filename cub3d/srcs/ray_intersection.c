@@ -6,49 +6,24 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:22:19 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 10:44:26 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:05:37 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
 static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
 {
 	wh->nextx = wh->xintercept;
 	wh->nexty = wh->yintercept;
-	while (wh->nextx >= 0 && wh->nextx <= WINDOW_WIDTH && wh->nexty >= 0 && \
-			wh->nexty <= WINDOW_HEIGHT)
+	while (wh->nextx >= 0 && wh->nextx <= cub->info.map_dim_w && wh->nexty >= 0 && \
+			wh->nexty <= cub->info.map_dim_h)
 	{
-		if (direction == DOWN && !r->ray_down)
-			wh->nexty--;
-		else if (direction == LEFT && r->ray_left)
-			wh->nextx--;
-		if (is_a_wall(cub, wh->nextx, wh->nexty))
+		if ((direction == DOWN && !r->ray_down) && \
+				is_a_wall(cub, wh->nextx, wh->nexty - 1))
 			return (true);
-		else
-		{
-			if (direction == DOWN && !r->ray_down)
-				wh->nexty++;
-			else if (direction == LEFT && r->ray_left)
-				wh->nextx++;
-			wh->nextx += wh->xstep;
-			wh->nexty += wh->ystep;
-		}
-	}
-	return (false);
-}
-*/
-static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
-{
-	wh->nextx = wh->xintercept;
-	wh->nexty = wh->yintercept;
-	while (wh->nextx >= 0 && wh->nextx <= WINDOW_WIDTH && wh->nexty >= 0 && \
-			wh->nexty <= WINDOW_HEIGHT)
-	{
-		if ((direction == DOWN && !r->ray_down) && is_a_wall(cub, wh->nextx, wh->nexty - 1))
-			return (true);
-		else if ((direction == LEFT && r->ray_left) && is_a_wall(cub, wh->nextx - 1, wh->nexty))
+		else if ((direction == LEFT && r->ray_left) && \
+				is_a_wall(cub, wh->nextx - 1, wh->nexty))
 			return (true);
 		else if (is_a_wall(cub, wh->nextx, wh->nexty))
 			return (true);
@@ -133,7 +108,7 @@ void	draw_ray(t_cub3d *cub, t_ray *r)
 
 	r->end = assign_hit(cub, r, &h_wall_hit, &v_wall_hit);
 	r->end.color = RED;
-	draw_line(cub->mmap, init_line(init_pixel(\
+	draw_line(cub, init_line(init_pixel(\
 					cub->player->x * cub->mmap.ratio, \
 					cub->player->y * cub->mmap.ratio, \
 					RED), \

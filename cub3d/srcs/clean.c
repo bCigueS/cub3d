@@ -6,23 +6,23 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/10 09:42:42 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 10:51:54 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_map(int **map)
+void	free_map(t_cub3d *cub)
 {
 	int	y;
 
 	y = 0;
-	while (y < MH)
+	while (y < cub->info.map_row)
 	{
-		free(map[y]);
+		free(cub->map[y]);
 		y++;
 	}
-	free(map);
+	free(cub->map);
 }
 
 void	clean_rays(t_cub3d *cub)
@@ -35,21 +35,28 @@ void	clean_rays(t_cub3d *cub)
 	free(cub->tab_ray);
 }
 
+void	clean_texture(t_cub3d *cub)
+{
+	mlx_destroy_image(cub->mlx_ptr, cub->texture[0].img.img);
+	mlx_destroy_image(cub->mlx_ptr, cub->texture[1].img.img);
+	mlx_destroy_image(cub->mlx_ptr, cub->texture[2].img.img);
+	mlx_destroy_image(cub->mlx_ptr, cub->texture[3].img.img);
+	free(cub->texture);
+}
+
 void	clean_mlx(t_cub3d *cub)
 {
+	if (cub->tab_ray != NULL)
+		clean_rays(cub);
 	if (cub->texture != NULL)
-	{
-		mlx_destroy_image(cub->mlx_ptr, cub->texture[0].img.img);
-		mlx_destroy_image(cub->mlx_ptr, cub->texture[1].img.img);
-		mlx_destroy_image(cub->mlx_ptr, cub->texture[2].img.img);
-		mlx_destroy_image(cub->mlx_ptr, cub->texture[3].img.img);
-		free(cub->texture);
-	}
+		clean_texture(cub);
 	if (cub->player != NULL)
 	{
 		mlx_destroy_image(cub->mlx_ptr, cub->player->img.img);
 		free(cub->player);
 	}
+	if (cub->map != NULL)
+		free_map(cub);
 	if (cub->img.img != NULL)
 		mlx_destroy_image(cub->mlx_ptr, cub->img.img);
 	if (cub->mmap.img != NULL)
@@ -59,6 +66,4 @@ void	clean_mlx(t_cub3d *cub)
 	if (cub->mlx_ptr != NULL)
 		mlx_destroy_display(cub->mlx_ptr);
 	free(cub->mlx_ptr);
-	free_map(cub->map);
-	clean_rays(cub);
 }

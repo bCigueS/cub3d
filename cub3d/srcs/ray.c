@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:19:20 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 12:07:19 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:30:33 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	init_ray_tab(t_cub3d *cub)
 	double	increment_angle;
 
 	ray_number = WINDOW_WIDTH / STRIP;
-	angle = cub->player->rangle - FOV / 2;
-	increment_angle = FOV / ray_number;
+	angle = cub->player->rangle - (cub->info.fov / 2);
+	increment_angle = cub->info.fov / ray_number;
 	cub->tab_ray = (t_ray **)malloc(sizeof(t_ray *) * ray_number);
 	if (!cub->tab_ray)
 		return ;

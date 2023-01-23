@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:05:28 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 12:05:31 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 10:58:03 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ bool	is_a_wall(t_cub3d *cub, double x, double y)
 	int	mx;
 	int	my;
 
-	if ((x < 0 || x > WINDOW_WIDTH) || (y < 0 || y > WINDOW_HEIGHT))
+	if ((x < 0 || x > cub->info.map_dim_w) || \
+			(y < 0 || y > cub->info.map_dim_h))
 		return (false);
 	mx = floor(x / TILE_SIZE);
 	my = floor(y / TILE_SIZE);
@@ -46,7 +47,6 @@ double	normalise_angle2(double angle)
 	return (norm_angle);
 }
 
-
 double	line_len(t_player *p, double x, double y)
 {
 	double	distance;
@@ -54,4 +54,9 @@ double	line_len(t_player *p, double x, double y)
 	distance = (x - p->x) * (x - p->x) + (y - p->y) * (y - p->y);
 	distance = sqrt(distance);
 	return (distance);
+}
+
+double	degree_to_radian(double angle)
+{
+	return (angle * (M_PI / 180));
 }

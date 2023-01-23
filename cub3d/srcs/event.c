@@ -6,13 +6,12 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:35:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 11:26:07 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 10:53:34 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int render(void *param);
 static void	player_mouvement(int keycode, t_cub3d *cub)
 {
 	if (keycode == KEY_W)

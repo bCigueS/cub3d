@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 11:26:35 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:42:57 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static bool	player_get_position(t_cub3d *cub, t_player **player)
 	int	y;
 
 	y = 0;
-	while (y < MH)
+	while (y < cub->info.map_row)
 	{
 		x = 0;
-		while (x < MW)
+		while (x < cub->info.map_col)
 		{
 			if (cub->map[y][x] == 80)
 			{
@@ -36,6 +36,19 @@ static bool	player_get_position(t_cub3d *cub, t_player **player)
 	return (false);
 }
 
+static void	player_stepback(t_player *p)
+{
+	if (p->walk == 1)
+	{
+		p->x = p->x - cos(p->rangle);
+		p->y = p->y - sin(p->rangle);
+	}
+	else
+	{
+		p->x = p->x + cos(p->rangle);
+		p->y = p->y + sin(p->rangle);
+	}
+}
 
 static void	update_player_walk(t_cub3d *cub, t_player *p, int move, int i)
 {
@@ -57,23 +70,13 @@ static void	update_player_walk(t_cub3d *cub, t_player *p, int move, int i)
 			if (i == move)
 				break ;
 		}
-		else 
+		else
 		{
-			if (p->walk == 1)
-			{
-				p->x = p->x - cos(p->rangle);
-				p->y = p->y - sin(p->rangle);
-			}
-			else
-			{
-				p->x = p->x + cos(p->rangle);
-				p->y = p->y + sin(p->rangle);
-			}
+			player_stepback(p);
 			break ;
 		}
 	}
 }
-
 
 void	draw_player(t_cub3d *cub)
 {
@@ -91,9 +94,10 @@ void	draw_player(t_cub3d *cub)
 		{
 			color = cub->player->img.addr[x + cub->player->icon_w * y];
 			if (color != 0xFF000000)
-				draw_pixel(cub->mmap, \
+				draw_pixel(cub, \
 						(t_pixel){(x + cub->player->x - (15 / 2)) * ratio, \
-						(y + cub->player->y - (15 / 2)) * ratio, RED});
+						(y + cub->player->y - (15 / 2)) * ratio, RED}, \
+						MINI_MAP);
 			x++;
 		}
 		y++;
@@ -111,7 +115,7 @@ t_player	*init_player(t_cub3d *cub)
 	player->turn = 0;
 	player->walk = 0;
 	player->straf = 0;
-	player->rangle = 0.5 * M_PI;
+	player->rangle = cub->info.player_orientation;
 	player->rspeed = 4 * (M_PI / 180);
 	if (player_get_position(cub, &player) == false)
 		return (free(player), NULL);

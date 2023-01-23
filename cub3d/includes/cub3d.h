@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/20 12:00:19 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/23 12:37:57 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 /* --- CONSTANT --- */
 # define MW 15
 # define MH 15
-# define WINDOW_WIDTH MW * TILE_SIZE 
-# define WINDOW_HEIGHT MH * TILE_SIZE
+# define WINDOW_WIDTH 1280 
+# define WINDOW_HEIGHT 920
 
-# define FOV 50 * (M_PI / 180)
+# define FOV 50 
 # define STRIP 1 
 
 /* --- MLX --- */
@@ -50,10 +50,10 @@
 # define KEY_ARROW_LEFT 0xff51
 # define KEY_ARROW_RIGHT 0xff53
 
-typedef struct s_player t_player;
+typedef struct s_player	t_player;
 typedef struct s_ray	t_ray;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*img;
 	int			*addr;
@@ -63,7 +63,7 @@ typedef struct	s_img
 	double		ratio;
 }				t_img;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	char		orientation;
 	t_img		img;
@@ -71,10 +71,10 @@ typedef struct	s_texture
 	int			icon_h;
 }				t_texture;
 
-typedef struct	s_player
+typedef struct s_player
 {
-	double			x;
-	double			y;
+	double		x;
+	double		y;
 	int			mspeed;
 	int			turn;
 	int			walk;
@@ -87,7 +87,17 @@ typedef struct	s_player
 	int			icon_w;
 }				t_player;
 
-typedef struct	s_cub3d
+typedef struct s_info
+{
+	int			map_col;
+	int			map_row;
+	int			map_dim_w;
+	int			map_dim_h;
+	double		fov;
+	double		player_orientation;
+}				t_info;
+
+typedef struct s_cub3d
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -97,13 +107,16 @@ typedef struct	s_cub3d
 	int			**map;
 	t_ray		**tab_ray;
 	t_texture	*texture;
+	t_info		info;
 }				t_cub3d;
 
+int		render(void *param);
 /* --- utils.c --- */
 
 bool	is_a_wall(t_cub3d *cub, double x, double y);
 void	normalise_angle(t_player *p);
 double	line_len(t_player *p, double x, double y);
 double	normalise_angle2(double angle);
+double	degree_to_radian(double angle);
 
 #endif
