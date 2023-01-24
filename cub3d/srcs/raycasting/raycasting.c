@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 11:27:06 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 13:28:10 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ void	raycasting_draw_wall(t_cub3d *cub, t_rcinfo rci, t_ray *r, int *pi)
 	}
 }
 */
-
-static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci, \
+static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci,
 		t_ray *r, int y_coo)
 {
-	t_texture	*tex;
-	unsigned int			tex_x;
-	unsigned int			tex_y;
+	t_texture		*tex;
+	unsigned int	tex_x;
+	unsigned int	tex_y;
 
 	if (cub->map[r->wh_index_y][r->wh_index_x] == 68)
 		tex = cub->door_to_show; 
@@ -67,7 +66,8 @@ static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci, \
 	if (r->ray_left)
 		tex_x = TILE_SIZE - tex_x;
 	tex_x = (tex_x * tex->icon_w) / TILE_SIZE;
-	if (tex_x >= 0 && tex_x < (unsigned int)tex->icon_w && tex_y >= 0 && tex_y < (unsigned int)tex->icon_h)
+	if (tex_x >= 0 && tex_x < (unsigned int)tex->icon_w && tex_y >= 0 && \
+			tex_y < (unsigned int)tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
 		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
@@ -76,9 +76,9 @@ static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci, \
 static unsigned int	texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, \
 		t_ray *r, int y_coo)
 {
-	t_texture	*tex;
-	unsigned int			tex_x;
-	unsigned int			tex_y;
+	t_texture		*tex;
+	unsigned int	tex_x;
+	unsigned int	tex_y;
 
 	if (cub->map[r->wh_index_y][r->wh_index_x] == 68)
 		tex = cub->door_to_show;
@@ -92,7 +92,8 @@ static unsigned int	texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, \
 	if (r->ray_down)
 		tex_x = TILE_SIZE - tex_x;
 	tex_x = (tex_x * tex->icon_w) / TILE_SIZE;
-	if (tex_x >= 0 && tex_x < (unsigned int)tex->icon_w && tex_y >= 0 && tex_y < (unsigned int)tex->icon_h)
+	if (tex_x >= 0 && tex_x < (unsigned int)tex->icon_w && tex_y >= 0 && \
+			tex_y < (unsigned int)tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
 		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
@@ -156,7 +157,6 @@ void	raycasting(t_cub3d *cub)
 							r->distance;
 		rayc.wall_height = (TILE_SIZE / rayc.correct_distance) * \
 							rayc.wall_projection_distance;
-		//raycasting_draw_wall(cub, rayc, r, &pixel_index);
 		raycasting_draw_wall_texture(cub, rayc, r, &pixel_index);
 	}
 }

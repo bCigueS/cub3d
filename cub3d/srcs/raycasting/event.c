@@ -6,90 +6,11 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:35:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 17:02:25 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 13:31:06 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	player_next_to_door(t_cub3d *cub)
-{
-	int	x;
-	int	y;
-	int	**map;
-	double a;
-
-	x = floor(cub->player->x / TILE_SIZE);
-	y = floor(cub->player->y / TILE_SIZE);
-	map = cub->map;
-	a = cub->player->rangle;
-
-	if ((map[y - 1][x] == 68 || map[y - 1][x] == 2) && (a > 1.25 * M_PI && a < 1.75 * M_PI))
-		return (map[y - 1][x]);
-	if ((map[y + 1][x] == 68 || map[y + 1][x] == 2) && (a > 0.25 * M_PI && a < 0.75 * M_PI))
-		return (map[y + 1][x]);
-	if ((map[y][x + 1] == 68 || map[y][x + 1] == 2) && (a > 1.75 * M_PI || a < 0.25 * M_PI))
-	{
-		ft_printf("Ya une porte\n");
-		return (map[y][x + 1]);
-	}
-	if ((map[y][x - 1] == 68 || map[y][x - 1] == 2) && (a > 0.75 * M_PI && a < 1.25 * M_PI))
-		return (map[y][x - 1]);
-	return (0);
-}
-
-void	action_open(t_cub3d *cub)
-{
-	int	x;
-	int	y;
-	int	**map;
-	double a;
-
-	x = floor(cub->player->x / TILE_SIZE);
-	y = floor(cub->player->y / TILE_SIZE);
-	map = cub->map;
-	a = cub->player->rangle;
-	if ((map[y - 1][x] == 68) && (a > 1.25 * M_PI && a < 1.75 * M_PI))
-		map[y - 1][x] = 2;
-	else if ((map[y + 1][x] == 68) && (a > 0.25 * M_PI && a < 0.75 * M_PI))
-		map[y + 1][x] = 2;
-	else if ((map[y][x + 1] == 68) && (a > 1.75 * M_PI || a < 0.25 * M_PI))
-		map[y][x + 1] = 2;
-	else if ((map[y][x - 1] == 68) && (a > 0.75 * M_PI && a < 1.25 * M_PI))
-		map[y][x - 1] = 2;
-}
-
-void	action_close(t_cub3d *cub)
-{
-	int	x;
-	int	y;
-	int	**map;
-	double a;
-
-	x = floor(cub->player->x / TILE_SIZE);
-	y = floor(cub->player->y / TILE_SIZE);
-	map = cub->map;
-	a = cub->player->rangle;
-	if ((map[y - 1][x] == 2) && (a > 1.25 * M_PI && a < 1.75 * M_PI))
-		map[y - 1][x] = 68;
-	else if ((map[y + 1][x] == 2) && (a > 0.25 * M_PI && a < 0.75 * M_PI))
-		map[y + 1][x] = 68;
-	else if ((map[y][x + 1] == 2) && (a > 1.75 * M_PI || a < 0.25 * M_PI))
-		map[y][x + 1] = 68;
-	else if ((map[y][x - 1] == 2) && (a > 0.75 * M_PI && a < 1.25 * M_PI))
-		map[y][x - 1] = 68;
-}
-
-void	open_close_door(t_cub3d *cub)
-{
-	int	action;
-
-	action = player_next_to_door(cub);
-	if (action == 68)
-		action_open(cub);
-	else if (action == 2)
-		action_close(cub);
-}
 
 static void	player_mouvement(int keycode, t_cub3d *cub)
 {

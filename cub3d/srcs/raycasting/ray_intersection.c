@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:22:19 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 14:29:52 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 13:19:42 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static bool	wall_found(t_cub3d *cub, t_wallh *wh, t_ray *r, int direction)
 {
 	wh->nextx = wh->xintercept;
 	wh->nexty = wh->yintercept;
-	while (wh->nextx >= 0 && wh->nextx <= cub->info.map_dim_w && wh->nexty >= 0 && \
-			wh->nexty <= cub->info.map_dim_h)
+	while (wh->nextx >= 0 && wh->nextx <= cub->info.map_dim_w && \
+			wh->nexty >= 0 && wh->nexty <= cub->info.map_dim_h)
 	{
 		if ((direction == DOWN && !r->ray_down) && \
 				is_a_wall(cub, wh->nextx, wh->nexty - 1))
@@ -99,35 +99,6 @@ static t_pixel	assign_hit(t_cub3d *cub, t_ray *r, t_wallh *hwh, t_wallh *vwh)
 		r->is_horizontal_hit = false;
 	}
 	return (end);
-}
-
-void	colission_index(t_ray *r)
-{
-	int	x;
-	int	y;
-
-	if (!r->ray_down && r->is_horizontal_hit)
-	{
-		y = floor((r->end.y - 1) / TILE_SIZE);
-		x = floor(r->end.x / TILE_SIZE);
-	}
-	else if (r->ray_down && r->is_horizontal_hit)
-	{
-		y = floor(r->end.y / TILE_SIZE);
-		x = floor(r->end.x / TILE_SIZE);
-	}
-	else if (r->ray_left && !r->is_horizontal_hit)
-	{
-		y = floor(r->end.y / TILE_SIZE);
-		x = floor((r->end.x - 1) / TILE_SIZE);
-	}
-	else 
-	{
-		y = floor(r->end.y / TILE_SIZE);
-		x = floor(r->end.x / TILE_SIZE);
-	}
-	r->wh_index_y = y;
-	r->wh_index_x = x;
 }
 
 void	draw_ray(t_cub3d *cub, t_ray *r)

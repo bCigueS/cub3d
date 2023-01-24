@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:11:51 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 12:46:38 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 13:51:15 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	draw_line(t_cub3d *cub, t_line line)
 	while (1)
 	{
 		draw_pixel(cub, init_pixel(line.x, line.y, line.color), MINI_MAP);
-		if (line.x == (unsigned int)line.p2.x && line.y == (unsigned int)line.p2.y)
+		if (line.x == (unsigned int)line.p2.x && \
+				line.y == (unsigned int)line.p2.y)
 			break ;
 		err2 = 2 * line.err;
 		if (err2 > -line.dy)
@@ -71,7 +72,7 @@ void	draw_line(t_cub3d *cub, t_line line)
 		}
 		if ((line.x < 0 && line.x >= (unsigned int)cub->info.map_dim_w) && \
 			(line.y < 0 && line.y >= (unsigned int)cub->info.map_dim_w))
-				break ;
+			break ;
 	}
 }
 
@@ -82,7 +83,8 @@ void	draw_line2(t_cub3d *cub, t_line line)
 	while (1)
 	{
 		draw_pixel(cub, init_pixel(line.x, line.y, line.color), WINDOW);
-		if (line.x == (unsigned int)line.p2.x && line.y == (unsigned int)line.p2.y)
+		if (line.x == (unsigned int)line.p2.x && \
+				line.y == (unsigned int)line.p2.y)
 			break ;
 		err2 = 2 * line.err;
 		if (err2 > -line.dy)
@@ -97,6 +99,6 @@ void	draw_line2(t_cub3d *cub, t_line line)
 		}
 		if ((line.x < 0 && line.x >= (unsigned int)cub->info.map_dim_w) && \
 			(line.y < 0 && line.y >= (unsigned int)cub->info.map_dim_w))
-				break ;
+			break ;
 	}
 }

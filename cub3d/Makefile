@@ -6,7 +6,7 @@
 #    By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
-#    Updated: 2023/01/24 11:09:12 by sbeylot          ###   ########.fr        #
+#    Updated: 2023/01/24 13:47:38 by sbeylot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ RM		:=	rm -rf
 
 SRCS_DIR	:=	srcs/
 SRCS_NAME	:=	main.c\
+				raycasting/cub3d.c\
 				raycasting/clean.c\
 				raycasting/init_mlx.c\
 				raycasting/drawing.c\
@@ -28,6 +29,9 @@ SRCS_NAME	:=	main.c\
 				raycasting/player.c\
 				raycasting/event.c\
 				raycasting/utils.c\
+				raycasting/utils2.c\
+				raycasting/door.c\
+				raycasting/door_texture.c\
 				parsing/utils_parsing.c\
 				parsing/file_handler.c\
 				parsing/parsing.c\
@@ -51,40 +55,74 @@ HEADER_NAME	:=	cub3d.h\
 				player.h\
 				ray.h\
 				event.h\
-				parsing.h
+				parsing.h\
+				door.h
 HEADER		:=	-I.$(HEADER_DIR)
 
 INCLUDE_LFT	:=	-L./libft -lft
 INCLUDE_MLX	:=	-L./mlx	-lmlx -lXext -lX11 -lm
 
+############ COLORS ############
+
+GREEN = "\033[92m"
+CYAN = "\033[96m"
+BOLD = "\033[1m"
+NC = "\033[0m"
+# NC = No Colors (use for reset)
+
 
 all: $(NAME)
 
 $(NAME):	$(OBJS)
-	make -C ./libft
-	make -C ./mlx
-	$(CC) $(CFLAGS) $(HEADER) $(OBJS) -o $(NAME) $(INCLUDE_LFT) $(INCLUDE_MLX)
+	make --no-print-directory title 
+	@make --no-print-directory -C ./libft
+	@make --no-print-directory -C ./mlx
+	@$(CC) $(CFLAGS) $(HEADER) $(OBJS) -o $(NAME) $(INCLUDE_LFT) $(INCLUDE_MLX)
+	@echo ${CYAN}${BOLD}Compilation ${NC}[${GREEN}OK${NC}]
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
-	mkdir -p $(OBJS_DIR)
-	mkdir -p $(OBJS_DIR)raycasting
-	mkdir -p $(OBJS_DIR)parsing
-	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@ 
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)raycasting
+	@mkdir -p $(OBJS_DIR)parsing
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@ 
 
 clean:
-	make clean -C ./libft 
-	make clean -C ./mlx
-	$(RM) $(OBJS_DIR)
+	@make $@ --no-print-directory -C ./libft 
+	@make $@ --no-print-directory -C ./mlx
+	@$(RM) $(OBJS_DIR)
+	@echo ${CYAN}${BOLD}Objects cleaned${NC}
 
 fclean: clean
-	make fclean -C ./libft
-	$(RM) $(NAME)
+	@make $@ --no-print-directory -C ./libft
+	@$(RM) $(NAME)
+	@echo ${CYAN}${BOLD}Cleanning ${NC}[${GREEN}OK${NC}]
 
 re: fclean all
 
 -include $(DEPS)
 
-.SECONDARY: $(OBJS)
+.SECONDARY: $(OBJS) 
 
-.PHONY: all clean fclean
+.PHONY: all clean fclean re
+
+#ASCII = ANSI Shadow
+define TITLE 
+\033[92m
+
+ ██████╗██╗   ██╗██████╗ ██████╗ ██████╗ 
+██╔════╝██║   ██║██╔══██╗╚════██╗██╔══██╗
+██║     ██║   ██║██████╔╝ █████╔╝██║  ██║
+██║     ██║   ██║██╔══██╗ ╚═══██╗██║  ██║
+╚██████╗╚██████╔╝██████╔╝██████╔╝██████╔╝
+ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ 
+                                         
+\033[0m                                                                                                           
+endef
+export TITLE
+
+title :
+	clear
+	@echo "$$TITLE"
+
+-include ${DEPS}
 

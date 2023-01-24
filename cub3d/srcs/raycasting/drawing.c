@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:54:53 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 10:42:40 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 13:55:24 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	draw_map(t_cub3d *cub)
 				draw_pixel(cub, \
 						(t_pixel){x, y, BLACK}, \
 						MINI_MAP);
+			if (is_a_void(cub, x / cub->mmap.ratio, y / cub->mmap.ratio))
+				draw_pixel(cub, \
+						(t_pixel){x, y, BLACK}, \
+						MINI_MAP);
 			x++;
 		}
 		y++;
@@ -106,9 +110,9 @@ void	draw_ceiling_floor(t_cub3d *cub)
 		while (x < WINDOW_WIDTH)
 		{
 			if (y < WINDOW_HEIGHT / 2)
-				draw_pixel(cub, (t_pixel){x, y, CEILLING}, WINDOW);
+				draw_pixel(cub, (t_pixel){x, y, cub->info.ceilling}, WINDOW);
 			else
-				draw_pixel(cub, (t_pixel){x, y, FLOOR}, WINDOW);
+				draw_pixel(cub, (t_pixel){x, y, cub->info.floor}, WINDOW);
 			x++;
 		}
 		y++;

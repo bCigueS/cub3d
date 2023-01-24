@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:05:28 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 14:01:07 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 12:59:01 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ bool	is_a_wall(t_cub3d *cub, double x, double y)
 		return (false);
 	mx = floor(x / TILE_SIZE);
 	my = floor(y / TILE_SIZE);
+	if (mx >= cub->info.map_col || my >= cub->info.map_row)
+		return (false);
 	if (cub->map[my][mx] == 1 || cub->map[my][mx] == 68)
 		return (true);
 	return (false);

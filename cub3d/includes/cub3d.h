@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 10:31:17 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:13:41 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "player.h"
 # include "ray.h"
 # include "parsing.h"
+# include "door.h"
 
 /* --- CONSTANT --- */
 # define MW 15
@@ -69,7 +70,6 @@ typedef struct s_img
 
 typedef struct s_texture
 {
-	char		orientation;
 	t_img		img;
 	int			icon_w;
 	int			icon_h;
@@ -93,13 +93,15 @@ typedef struct s_player
 
 typedef struct s_info
 {
-	int			map_col;
-	int			map_row;
-	int			map_dim_w;
-	int			map_dim_h;
-	double		fov;
-	double		player_orientation;
-}				t_info;
+	int				map_col;
+	int				map_row;
+	int				map_dim_w;
+	int				map_dim_h;
+	double			fov;
+	double			player_orientation;
+	unsigned int	ceilling;
+	unsigned int	floor;
+}					t_info;
 
 typedef struct s_cub3d
 {
@@ -108,21 +110,28 @@ typedef struct s_cub3d
 	t_img		img;
 	t_img		mmap;
 	t_player	*player;
-	int			**map;		// <--
+	int			**map;
 	t_ray		**tab_ray;
-	t_texture	*texture;	// <--
+	t_texture	*texture;
 	t_texture	*door;
 	t_texture	*door_to_show;
-	t_info		info;		// <--
+	t_info		info;
 }				t_cub3d;
 
 int		render(void *param);
-/* --- utils.c --- */
+bool	cub3d(t_cub3d *cub, t_parser *parser);
 
+/* --- utils.c --- */
 bool	is_a_wall(t_cub3d *cub, double x, double y);
 void	normalise_angle(t_player *p);
 double	line_len(t_player *p, double x, double y);
 double	normalise_angle2(double angle);
 double	degree_to_radian(double angle);
+
+/* --- utils2.c --- */
+bool	is_a_void(t_cub3d *cub, int x, int y);
+void	colission_index(t_ray *r);
+double	get_minimap_ratio(t_cub3d *cub);
+void	player_stepback(t_player *p);
 
 #endif

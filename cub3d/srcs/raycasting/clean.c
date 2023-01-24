@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 11:38:08 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:04:31 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ void	free_map(char **map)
 
 void	free_map_int(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (i <= cub->info.map_row)
+	while (i < cub->info.map_row)
 		free(cub->map[i++]);
 	free(cub->map);
 }
-
 
 void	clean_rays(t_cub3d *cub)
 {
