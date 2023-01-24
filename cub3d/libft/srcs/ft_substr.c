@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 10:38:33 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/09 15:08:37 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/11 15:40:54 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:56 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Input --
- * @s		: source of the extraction
- * @start	: Start index
- * @len		: Lenght of the new string
- * Return --
- * ptr on new string || Null if malloc fail
- */
 
 #include "../includes/libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ptr;
-	size_t	ptrlen;
+	char				*back;
+	char				*cp_s;
+	unsigned int		i;
 
+	i = 0;
+	cp_s = (char *)s;
 	if (start > ft_strlen(s))
 	{
-		ptr = ft_strdup("");
-		return (ptr);
+		back = ft_calloc(1, sizeof(char));
+		if (back == NULL)
+			return (NULL);
+		return (back);
 	}
-	ptrlen = ft_strlen(s + start);
-	if (ptrlen < len)
-		len = ptrlen;
-	ptr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!ptr)
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
+	if (len == ft_strlen(s))
+		len = ft_strlen(s) - start;
+	back = malloc(sizeof(char) * (len + 1));
+	if (back == NULL)
 		return (NULL);
-	ft_strlcpy(ptr, s + start, len + 1);
-	return (ptr);
+	while (cp_s[start] && i < len)
+		back[i++] = cp_s[start++];
+	back[i] = '\0';
+	return (back);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 16:26:21 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 11:54:53 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/11 16:21:31 by fbily             #+#    #+#             */
+/*   Updated: 2022/10/08 21:05:01 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*ptr;
-	int		size_s;
+	char	*back;
+	size_t	size;
+	size_t	i;
+	size_t	j;
 
-	size_s = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *)malloc(sizeof(char) * (size_s + 1));
-	if (!ptr)
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	ft_strlcpy(ptr, s1, size_s + 1);
-	ft_strlcat(ptr, s2, size_s + 1);
-	return (ptr);
+	size = (ft_strlen(s1) + ft_strlen(s2) + 1);
+	back = (char *)malloc(sizeof(char) * size);
+	if (!back)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		back[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		back[i + j] = s2[j];
+		j++;
+	}
+	back[i + j] = '\0';
+	return (back);
 }

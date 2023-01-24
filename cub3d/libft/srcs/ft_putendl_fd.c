@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 10:26:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/11/04 15:37:24 by fbily            ###   ########.fr       */
+/*   Created: 2022/05/12 15:41:58 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:45 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	ft_putendl_fd(char *s, int fd)
 {
 	if (s == NULL)
 		return ;
-	write(fd, s, ft_strlen(s));
+	ft_putstr_fd(s, fd);
 	write(fd, "\n", 1);
 }

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_utils.c                                   :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 17:25:16 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/08/17 17:28:06 by sbeylot          ###   ########.fr       */
+/*   Created: 2023/01/20 16:23:55 by fbily             #+#    #+#             */
+/*   Updated: 2023/01/24 10:27:40 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "cub3d.h"
 
-int	ft_is_charset(char c, char *charset)
+void	print_map(char **map)
 {
 	int	i;
 
 	i = 0;
-	while (charset[i] != '\0')
+	while (map[i])
 	{
-		if (charset[i] == c)
-			return (1);
+		printf("%s", map[i]);
 		i++;
 	}
-	return (0);
 }

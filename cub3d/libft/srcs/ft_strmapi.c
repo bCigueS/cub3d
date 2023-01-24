@@ -3,38 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 14:50:42 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/09 14:54:52 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/12 14:50:02 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:41 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Apply the function f @s to create a new string
- * Input --
- * @s	: Source
- * @(*f): Function to apply
- * Return --
- * ptr on a new string
- */
 
 #include "../includes/libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		i;
-	char	*ptr;
+	size_t	size;
+	size_t	i;
+	char	*back;
 
-	i = 0;
-	ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (ptr == NULL)
+	if (s == NULL || f == NULL)
 		return (NULL);
-	while (s[i])
+	i = 0;
+	if (s[i] == '\0')
+		return (back = ft_strdup(s));
+	size = ft_strlen(s);
+	back = malloc(sizeof(char) * (size +1));
+	if (back == NULL)
+		return (NULL);
+	while (i < size)
 	{
-		ptr[i] = f(i, s[i]);
+		back[i] = f(i, s[i]);
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	back[i] = '\0';
+	return (back);
 }

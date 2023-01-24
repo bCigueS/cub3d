@@ -3,104 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 15:22:39 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/08/17 17:25:35 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/11 17:16:08 by fbily             #+#    #+#             */
+/*   Updated: 2022/10/19 21:50:45 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * trim @s with the charset
- * Input --
- * @s	: Source
- * @c	: char to trim with
- * Return
- * ptr with all strings from the function
- */
-
 #include "../includes/libft.h"
 
-static int	ft_word_count(char const *s, char *c)
+static int	tot_len(const char *s, char c)
 {
+	int	len;
+
+	len = 0;
+	while (s[len] != '\0' && s[len] != c)
+		len++;
+	return (len);
+}
+
+static int	ft_word_count(const char *s, char c)
+{
+	int	i;
 	int	count;
 
 	count = 0;
-	while (*s)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		while (ft_is_charset(*s, c) && *s)
-			s++;
-		if (*s != '\0')
+		while (s[i] != '\0' && s[i] == c)
+			i++;
+		if (s[i] != '\0' && s[i] != c)
 			count++;
-		while (!(ft_is_charset(*s, c)) && *s)
-			s++;
+		while (s[i] != '\0' && s[i] != c)
+			i++;
 	}
 	return (count);
 }
 
-static int	ft_word_len(char const *s, char *c)
+static char	*ft_strddup(const char *s, char c)
 {
-	int	wordlen;
-
-	wordlen = 0;
-	while (ft_is_charset(*s, c) && *s)
-		s++;
-	while (!(ft_is_charset(*s, c)) && *s)
-	{
-		wordlen++;
-		s++;
-	}
-	return (wordlen);
-}
-
-static char	**ft_protection(char **tab, int index)
-{
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	while (i < index && tab[i] != 0)
+	str = ft_calloc(tot_len(s, c) + 1, sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	while (s[i] != '\0' && s[i] != c)
 	{
-		free(tab[i]);
+		str[i] = s[i];
 		i++;
 	}
-	free(tab);
-	return (0);
+	str[i] = '\0';
+	return (str);
 }
 
-static char	**ft_malloc_tab(char const *s, char *c)
+static char	**ft_free(char **tab, int i)
 {
-	char	**tab;
-
-	tab = (char **)malloc(sizeof(*tab) * (ft_word_count(s, c) + 1));
-	if (!tab)
-		return (NULL);
-	return (tab);
-}
-
-char	**ft_split(char const *s, char *c)
-{
-	char	**tab;
-	int		i;
-	int		j;
-	int		index;
-
-	if (s == 0)
-		return (0);
-	index = -1;
-	i = 0;
-	tab = ft_malloc_tab(s, c);
-	while (++index < ft_word_count(s, c))
+	while (i >= 0)
 	{
-		j = 0;
-		tab[index] = (char *)malloc(sizeof(char) * (ft_word_len(s + i, c) + 1));
-		if (!tab[index])
-			return (ft_protection(tab, index));
-		while (s[i] && ft_is_charset(s[i], c))
-			i++;
-		while (s[i] && !(ft_is_charset(s[i], c)))
-			tab[index][j++] = s[i++];
-		tab[index][j] = '\0';
+		free(tab[i]);
+		i--;
 	}
-	tab[index] = NULL;
+	free(tab);
+	return (NULL);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	size_t		i;
+	char		**tab;
+
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	tab = ft_calloc(ft_word_count(s, c) + 1, sizeof(char *));
+	if (tab == NULL)
+		return (NULL);
+	while (*s && ft_word_count(s, c))
+	{
+		while (*s != '\0' && *s == c)
+			s++;
+		if (*s != '\0' && *s != c)
+		{
+			tab[i] = ft_strddup(s, c);
+			if (tab[i] == NULL)
+				return (ft_free(tab, i));
+			i++;
+		}
+		while (*s != '\0' && *s != c)
+			s++;
+	}
 	return (tab);
 }

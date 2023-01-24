@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 17:36:10 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 11:27:06 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ static void	raycasting_draw_wall_texture(t_cub3d *cub, t_rcinfo rci, \
 		*pi += 1;
 	}
 }
+
 void	raycasting(t_cub3d *cub)
 {
 	int			i;

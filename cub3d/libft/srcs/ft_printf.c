@@ -3,78 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 22:19:28 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/27 22:19:28 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/26 16:27:29 by fbily             #+#    #+#             */
+/*   Updated: 2022/12/05 15:25:15 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/libftprintf.h"
 
-static int	is_valid_type(char type)
+int	which_print(char c, va_list args)
 {
-	int	i;
+	int		len;
 
-	i = -1;
-	while (FLAG[++i])
-	{
-		if (type == FLAG[i])
-			return (1);
-	}
-	return (-1);
-}
-
-static int	check_arg(va_list ap, char type)
-{
-	int	count;
-
-	count = 0;
-	if (type == 'c')
-		count = do_c_to_str(ap);
-	else if (type == 's')
-		count = do_s_to_str(ap);
-	else if (type == 'p')
-		count = do_p_to_str(ap);
-	else if (type == 'd' || type == 'i')
-		count = do_di_to_str(ap);
-	else if (type == 'u')
-		count = do_u_to_str(ap);
-	else if (type == 'x' || type == 'X')
-		count = do_x_to_str(ap, type);
-	else if (type == '%')
-	{
-		ft_putchar_fd('%', FD);
-		count = 1;
-	}
-	return (count);
+	len = 0;
+	if (c == 'c')
+		len = print_char((unsigned char)va_arg(args, int));
+	else if (c == 's')
+		len = print_str(va_arg(args, const char *));
+	else if (c == 'd' || c == 'i')
+		len = print_int(args);
+	else if (c == 'u')
+		len = print_unsigned_int(args);
+	else if (c == 'x' || c == 'X')
+		len = print_hexa(args, c);
+	else if (c == 'p')
+		len = print_ptr(args);
+	else if (c == '%')
+		len = print_char('%');
+	else
+		return (-1);
+	return (len);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	va_list	ap;
+	va_list	args;
 	int		i;
-	int		count;
+	int		len;
 
+	if (str == NULL)
+		return (-1);
+	va_start (args, str);
 	i = 0;
-	count = 0;
-	va_start(ap, str);
+	len = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
+			len += which_print(str[i + 1], args);
 			i++;
-			if (is_valid_type(str[i]))
-				count += check_arg(ap, str[i++]);
-			else
-				return (-1);
 		}
 		else
 		{
-			ft_putchar_fd(str[i++], FD);
-			count++;
+			write(1, &str[i], 1);
+			len++;
 		}
+		i++;
 	}
-	va_end(ap);
-	return (count);
+	va_end(args);
+	return (len);
 }

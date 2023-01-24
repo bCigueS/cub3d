@@ -3,44 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 12:27:43 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/03 13:54:43 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/08 12:26:31 by flamby            #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:36 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Input --
- * @dest	:	destination
- * @src		:	source
- * @n		:	Nombre de bytes a copier
- * Return --
- * pointer to dest
- */
 
 #include "../includes/libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char		*ptr_d;
-	const unsigned char	*ptr_s;
-	unsigned char		*last_d;
-	const unsigned char	*last_s;
+	unsigned char	*cp_dest;
+	unsigned char	*cp_src;
+	size_t			i;
 
-	ptr_d = dest;
-	ptr_s = src;
-	if (ptr_d < ptr_s)
+	if (dest == NULL || src == NULL)
+		return (NULL);
+	cp_dest = (unsigned char *)dest;
+	cp_src = (unsigned char *)src;
+	if (src > dest)
 	{
-		while (n--)
-			*ptr_d++ = *ptr_s++;
+		i = -1;
+		while (++i < n)
+			cp_dest[i] = cp_src[i];
 	}
-	else
+	else if (src < dest)
 	{
-		last_d = dest + (n - 1);
-		last_s = src + (n - 1);
-		while (n--)
-			*last_d-- = *last_s--;
+		while (n > 0)
+		{
+			cp_dest[n - 1] = cp_src[n - 1];
+			n--;
+		}
 	}
-	return (dest);
+	return (cp_dest);
 }

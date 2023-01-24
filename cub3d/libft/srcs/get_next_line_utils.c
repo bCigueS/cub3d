@@ -3,97 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 10:31:52 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/08/19 08:59:38 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/23 11:32:09 by fbily             #+#    #+#             */
+/*   Updated: 2023/01/18 18:59:38 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/get_next_line.h"
 
-void	ft_gnlclean_stash(t_gnl **stash)
+/* Looks for a newline character in the given linked list. */
+int	found_newline(t_gnl_list *stash)
 {
-	t_gnl	*new;
-	t_gnl	*temp;
-	int		i;
-	int		j;
+	t_gnl_list	*actual;
+	int			i;
 
-	new = malloc(sizeof(t_gnl));
-	if (*stash == NULL || new == NULL)
-		return ;
-	new->next = NULL;
-	temp = ft_gnllast(*stash);
-	i = 0;
-	while (temp->content[i] && temp->content[i] != '\n')
-		i++;
-	if (temp->content && temp->content[i] == '\n')
-		i++;
-	new->content = malloc(sizeof(char) * ft_strlen((temp->content + i)) + 1);
-	if (new == NULL)
-		return ;
-	j = 0;
-	while (temp->content[i])
-		new->content[j++] = temp->content[i++];
-	new->content[j] = '\0';
-	ft_gnlclean(stash);
-	*stash = new;
-}
-
-int	ft_is_newline(t_gnl *stash)
-{
-	int		i;
-	t_gnl	*current;
-
-	i = 0;
 	if (stash == NULL)
 		return (0);
-	current = ft_gnllast(stash);
-	while (current->content[i])
+	i = 0;
+	actual = ft_lst_get_last(stash);
+	while (actual->line[i])
 	{
-		if (current->content[i] == '\n')
+		if (actual->line[i] == '\n')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	ft_gnl_strlen(t_gnl *stash)
+/* Returns a pointer to the last node in our stash */
+t_gnl_list	*ft_lst_get_last(t_gnl_list *stash)
 {
-	int		i;
-	int		str_len;
-	t_gnl	*current;
+	t_gnl_list	*last;
 
-	str_len = 0;
-	if (stash == NULL)
-		return (0);
-	current = stash;
-	while (current)
-	{
-		i = 0;
-		while (current->content[i])
-		{
-			if (current->content[i] == '\n')
-				return (str_len + 1);
-			i++;
-			str_len++;
-		}
-		current = current->next;
-	}
-	return (str_len);
+	last = stash;
+	while (last && last->next != NULL)
+		last = last->next;
+	return (last);
 }
 
-void	ft_gnlclean(t_gnl **stash)
+/* Calculates the number of chars in the current line, including the trailing
+ * \n if there is one, and allocates memory accordingly. */
+char	*generate_line(t_gnl_list *stash)
 {
-	t_gnl	*temp;
+	int		i;
+	int		j;
+	char	*line;
 
-	if (*stash == NULL)
-		return ;
-	while (*stash)
+	j = 0;
+	while (stash)
 	{
-		temp = (*stash)->next;
-		free((*stash)->content);
-		free(*stash);
-		*stash = temp;
+		i = 0;
+		while (stash->line[i])
+		{
+			if (stash->line[i] == '\n')
+			{
+				j++;
+				break ;
+			}
+			i++;
+			j++;
+		}
+		stash = stash->next;
+	}
+	line = malloc(sizeof(char) * (j + 1));
+	if (line == NULL)
+		return (NULL);
+	return (line);
+}
+
+/* Frees the entire stash. */
+void	free_stash(t_gnl_list *stash)
+{
+	t_gnl_list	*actual;
+	t_gnl_list	*next;
+
+	actual = stash;
+	while (actual)
+	{
+		free(actual->line);
+		next = actual->next;
+		free (actual);
+		actual = next;
 	}
 }

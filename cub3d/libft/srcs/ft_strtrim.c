@@ -3,62 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 14:23:05 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 11:56:53 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/14 12:22:05 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:53 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Remove at the end and at the begining of the string the characters inside @set
- * Input --
- * @s1	: Source
- * @set	: Set of character to remove
- * Return --
- * string trim
- */
-
 #include "../includes/libft.h"
 
-static int	ft_ischarset(const char c, char const *charset)
+static int	inset(char *set, char c)
 {
 	int	i;
 
 	i = 0;
-	while (charset[i])
+	while (set[i])
 	{
-		if (charset[i] == c)
+		if (set[i] == c)
 			return (1);
-		i++;
+		else
+			i++;
 	}
 	return (0);
 }
 
+static int	get_start(char *str, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (inset(set, str[i]) == 1)
+		i++;
+	return (i);
+}
+
+static int	get_end(char *str, char *set)
+{
+	int	i;
+
+	i = ft_strlen(str) - 1;
+	while (i > 0 && inset(set, str[i]) == 1)
+		i--;
+	return (i + 1);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	s1_len;
-	size_t	i;
-	size_t	j;
-	char	*ptr;
+	int		start;
+	int		size;
+	int		i;
+	char	*back;
 
-	s1_len = ft_strlen(s1) - 1;
-	i = 0;
-	j = 0;
-	while (ft_ischarset(s1[i], set))
-		i++;
-	if (i == ft_strlen(s1))
-	{
-		ptr = ft_strdup("");
-		return (ptr);
-	}
-	while (ft_ischarset(s1[s1_len], set) && s1_len != 0)
-		s1_len--;
-	ptr = (char *)malloc(sizeof(char) * (s1_len + 1 - i) + 1);
-	if (ptr == NULL)
+	if (s1 == NULL || set == NULL)
 		return (NULL);
-	while (i <= s1_len)
-		ptr[j++] = s1[i++];
-	ptr[j] = '\0';
-	return (ptr);
+	start = get_start((char *)s1, (char *)set);
+	size = ((get_end((char *)s1, (char *)set)) - start) + 1;
+	if (size <= 1)
+	{
+		back = ft_calloc(1, sizeof(char));
+		if (back == NULL)
+			return (NULL);
+		return (back);
+	}
+	back = malloc(sizeof(char) * size);
+	if (back == NULL)
+		return (NULL);
+	i = 0;
+	while (i < (size - 1))
+		back[i++] = s1[start++];
+	back[i] = '\0';
+	return (back);
 }

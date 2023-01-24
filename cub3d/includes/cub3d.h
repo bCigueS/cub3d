@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 17:30:48 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 10:31:17 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 # define CUB3D_H
 
 /* ---Library--- */
-# include "libft.h"
-# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include <stdbool.h>
 # include <time.h>
+# include <errno.h>
+
+# include "../libft/includes/libft.h"
+# include "../mlx/mlx.h"
 # include "init_mlx.h"
 # include "event.h"
 # include "clean.h"
 # include "drawing.h"
 # include "player.h"
 # include "ray.h"
+# include "parsing.h"
 
 /* --- CONSTANT --- */
 # define MW 15
@@ -105,12 +108,12 @@ typedef struct s_cub3d
 	t_img		img;
 	t_img		mmap;
 	t_player	*player;
-	int			**map;
+	int			**map;		// <--
 	t_ray		**tab_ray;
-	t_texture	*texture;
+	t_texture	*texture;	// <--
 	t_texture	*door;
 	t_texture	*door_to_show;
-	t_info		info;
+	t_info		info;		// <--
 }				t_cub3d;
 
 int		render(void *param);

@@ -3,42 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 08:14:26 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 11:34:04 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/10 12:52:51 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:33 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Prototype -- size_t ft_strlcpy(char *dst, char *src, size_t size)
- * Input --
- * @dst : Destination of the function
- * @src : Source of the function
- * @size : Number of character copy
- * Return --
- * The total lenght of the string they tried to create (Length of src)
- */
-
 #include "../includes/libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+static void	ft_cpy(char *dest, char *src, int n)
 {
-	size_t	srclen;
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!dst || !src)
-		return (0);
-	srclen = ft_strlen(src);
-	if (size != 0)
+	while (i < n)
 	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+		dest[i] = src[i];
+		i++;
 	}
-	return (srclen);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	src_size;
+	char	*cp_src;
+
+	if (dest == NULL || src == NULL)
+		return (0);
+	cp_src = (char *)src;
+	src_size = ft_strlen(src);
+	if (src_size + 1 < size)
+	{
+		ft_cpy(dest, cp_src, src_size + 1);
+	}
+	else if (size != 0)
+	{
+		ft_cpy(dest, cp_src, size - 1);
+		dest[size - 1] = '\0';
+	}
+	return (src_size);
 }

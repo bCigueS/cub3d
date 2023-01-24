@@ -3,43 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 08:12:44 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 11:38:28 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/10 12:49:03 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:30 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Add a string to another
- * Input --
- * @dst	:	Destination
- * @src	:	Source
- * @size:	Size of the destination
- * Return --
- * return the size of the final destinatiom
- * For the function to work, the size must be greater than the destination
- * In the case size < dst lenght, it will return
- */
 
 #include "../includes/libft.h"
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t	srclen;
-	size_t	destlen;
+	size_t	src_size;
+	size_t	dest_size;
 	size_t	i;
+	size_t	j;
 
-	srclen = ft_strlen(src);
-	destlen = ft_strlen(dest);
-	if (size <= destlen)
-		return (size + srclen);
-	i = 0;
-	while (src[i] != '\0' && (i + destlen + 1) < size)
+	if (dest == NULL || src == NULL)
+		return (0);
+	src_size = ft_strlen(src);
+	dest_size = ft_strlen(dest);
+	i = dest_size;
+	j = 0;
+	if (size == 0)
+		return (src_size);
+	if (size < dest_size)
+		return (src_size + size);
+	while (src[j] && i < size - 1)
 	{
-		dest[destlen + i] = src[i];
+		dest[i] = src [j];
 		i++;
+		j++;
 	}
-	dest[destlen + i] = '\0';
-	return (destlen + srclen);
+	dest[i] = '\0';
+	return (dest_size + src_size);
 }

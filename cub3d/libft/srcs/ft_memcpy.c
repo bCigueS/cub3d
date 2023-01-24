@@ -3,35 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 11:53:58 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/03 13:49:36 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/08 12:21:49 by flamby            #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:32 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Input --
- * @dest	:	destionation
- * @src		:	source
- * @n		:	bytes to copy
- * Return --
- * pointer to dest
- */
 
 #include "../includes/libft.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char		*ptr_dest;
-	const char	*ptr_src;
+	unsigned char	*cp_src;
+	unsigned char	*cp_dest;
+	size_t			i;
 
-	ptr_dest = (char *)dest;
-	ptr_src = (const char *)src;
-	if (ptr_dest != NULL && ptr_src != NULL)
+	if (dest == NULL || src == NULL)
+		return (NULL);
+	cp_src = (unsigned char *)src;
+	cp_dest = (unsigned char *)dest;
+	i = 0;
+	while (i < n)
 	{
-		while (n--)
-			*ptr_dest++ = *ptr_src++;
+		cp_dest[i] = cp_src[i];
+		i++;
 	}
 	return (dest);
 }

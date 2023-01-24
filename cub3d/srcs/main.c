@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:07:59 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 17:38:38 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 11:25:40 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,6 @@ bool	cub3d(t_cub3d *cub)
 	return (true);
 }
 
-int	**create_map(int imap[15][15], int xx, int yy)
-{
-	int		**map;
-	int		x;
-	int		y;
-
-	map = (int **)malloc(sizeof(int *) * yy);
-	if (!map)
-		return (NULL);
-	y = 0;
-	while (y < yy)
-	{
-		x = 0;
-		map[y] = (int *)malloc(sizeof(int) * xx);
-		if (!map[y])
-			return (NULL);
-		while (x < xx)
-		{
-			map[y][x] = imap[y][x];
-			x++;
-		}
-		y++;
-	}
-	return (map);
-}
-
 void	init_map(t_cub3d *cub)
 {
 	cub->info.map_col = 15;
@@ -86,50 +60,118 @@ void	init_map(t_cub3d *cub)
 	cub->info.fov = degree_to_radian(FOV);
 }	
 
-int	main(void)
+void	init_parsing(t_parser *parser, char *argv)
 {
-	t_cub3d	cub;
-	int		map[MH][MW] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 1, 68, 1, 0, 0, 1, 0, 0, 1},
-	{1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-	{1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-	{1, 0, 1, 0, 68, 0, 0, 80, 0, 0,68, 0, 1, 0, 1},
-	{1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 1, 68, 1, 1, 1, 1, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-	{1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1},
-	{1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-	/*
-	int		map[MH][MW] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-	*/
+	int	i;
 
+	i = 0;
+	parser->path_file = argv;
+	parser->map.check_o = false;
+	parser->map.orientation = '0';
+	while (i <= C)
+	{
+		parser->textures[i].check = false;
+		parser->textures[i].img = NULL;
+		parser->textures[i].path = NULL;
+		parser->textures[i].hexa_color = 0;
+		i++;
+	}
+	parser->mlx = mlx_init();
+	if (!parser->mlx)
+	{
+		ft_printf_fd(STDERR_FILENO, "Error\nMlx init failed.\n");
+		exit(1);
+	}
+}
+void	convert_map_to_int(t_parser *parser, t_cub3d *cub)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	cub->map = (int **)malloc(sizeof(int *) * parser->map.map_height);
+	if (!cub->map)
+		return ;
+	while (i < parser->map.map_height)
+	{
+		j = 0;
+		cub->map[i] = (int *)malloc(sizeof(int) * parser->map.map_widht);
+		if (cub->map[i] == NULL)
+			return (clean_mlx(cub));
+		while (parser->map.map[i][j])
+		{
+			if (parser->map.map[i][j] == '1')
+				cub->map[i][j] = 1;
+			else if (parser->map.map[i][j] == '0')
+				cub->map[i][j] = 0;
+			else if (parser->map.map[i][j] == 'N' || \
+						parser->map.map[i][j] == 'S' || \
+						parser->map.map[i][j] == 'E' || \
+						parser->map.map[i][j] == 'W')
+				cub->map[i][j] = 80;
+			else 
+				cub->map[i][j] = 3;
+			j++;
+		}
+		i++;
+	}
+}
+
+void	bridge(t_parser *parser, t_cub3d *cub)
+{
+	convert_map_to_int(parser, cub);
 	/*
-	int		map2[3][15] = {\
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },\
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },\
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }};
 	*/
-	cub.map = create_map(map, 15, 15);
-	init_map(&cub);
+	for (int i = 0; i < parser->map.map_height; i++) {
+		for (int j = 0; j < parser->map.map_widht; j++) {
+			ft_printf_fd(1, "[%d] ", cub->map[i][j]);
+		}
+		ft_printf_fd(1, "\n");
+	}
+	cub->info.map_col = parser->map.map_widht - 1;
+	cub->info.map_row = parser->map.map_height - 1;
+	cub->info.map_dim_w = cub->info.map_col * TILE_SIZE;
+	cub->info.map_dim_h = cub->info.map_row * TILE_SIZE;
+
+	if (parser->map.orientation == 'N')
+		cub->info.player_orientation = M_PI * 1.5;
+	else if (parser->map.orientation == 'S')
+		cub->info.player_orientation = M_PI * 0.5;
+	else if (parser->map.orientation == 'E')
+		cub->info.player_orientation = M_PI;
+	else
+		cub->info.player_orientation = 0;
+	cub->info.fov = degree_to_radian(FOV);
+	
+}
+
+int	main(int argc, char **argv)
+{
+	t_cub3d		cub;
+	t_parser	parser;
+	int			i;
+	if (argc != 2)
+	{
+		ft_printf_fd(STDERR_FILENO, "%s", USAGE);
+		return (false);
+	}
+
+	init_parsing(&parser, argv[1]);
+	if (parsing(&parser) == false)
+		return (-1);
+	else
+	{
+		i = 0;
+		free_map(parser.tex_lines);
+		while (i < 4)
+			printf("Mlx img : %p\n", parser.textures[i++].img);
+		while (i < 6)
+			printf("Colors : 0x%x\n", parser.textures[i++].hexa_color);
+		printf("\n\n");
+		print_map(parser.map.map);
+	}
+	bridge(&parser, &cub);
+	free_map(parser.map.map);
 	cub3d(&cub);
 	return (0);
 }

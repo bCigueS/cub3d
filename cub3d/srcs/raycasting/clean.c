@@ -6,24 +6,32 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/23 14:00:01 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 11:38:08 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_map(t_cub3d *cub)
+void	free_map(char **map)
 {
-	int	y;
+	int	i;
 
-	y = 0;
-	while (y < cub->info.map_row)
-	{
-		free(cub->map[y]);
-		y++;
-	}
+	i = 0;
+	while (map[i])
+		free(map[i++]);
+	free(map);
+}
+
+void	free_map_int(t_cub3d *cub)
+{
+	int i;
+
+	i = 0;
+	while (i <= cub->info.map_row)
+		free(cub->map[i++]);
 	free(cub->map);
 }
+
 
 void	clean_rays(t_cub3d *cub)
 {
@@ -57,7 +65,7 @@ void	clean_mlx(t_cub3d *cub)
 		free(cub->player);
 	}
 	if (cub->map != NULL)
-		free_map(cub);
+		free_map_int(cub);
 	if (cub->img.img != NULL)
 		mlx_destroy_image(cub->mlx_ptr, cub->img.img);
 	if (cub->mmap.img != NULL)

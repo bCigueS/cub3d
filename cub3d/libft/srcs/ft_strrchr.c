@@ -3,44 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 10:09:54 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 09:54:41 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/10 14:47:45 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:45:50 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Input --
- * @s : source
- * @c : character we are looking for
- * Return --
- * pointeur on the last occurance of c or NULL if c not found
- */
 
 #include "../includes/libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*result;
 	int		i;
+	char	*cp_s;
+	char	*back;
 
-	i = ft_strlen(s);
-	if (c == '\0')
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	back = NULL;
+	cp_s = (char *)s;
+	while (cp_s[i])
 	{
-		result = (char *)&s[i];
-		return (result);
+		if (cp_s[i] == (unsigned char)c)
+			back = &cp_s[i];
+		i++;
 	}
+	if ((unsigned char)c != '\0')
+		return (back);
+	else if ((unsigned char)c == '\0')
+		return (&cp_s[ft_strlen(cp_s)]);
 	else
-		i--;
-	while (i >= 0)
-	{
-		if (s[i] == (unsigned char)c)
-		{
-			result = (char *)&s[i];
-			return (result);
-		}
-		i--;
-	}
-	return (NULL);
+		return (NULL);
 }

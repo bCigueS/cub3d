@@ -3,38 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 14:15:36 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/10 19:19:54 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/10 15:04:20 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:29 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Compare s1 with s2 to max bytes
- * Input --
- * @s1	: String 1
- * @s2	: String 2
- * @n	: Maximum bytes to scan
- * Return --
- * return a negative int if s1 < s2, 0 if s1 == s2, a positive int if s1 > s2
- */
 
 #include "../includes/libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	*ptr_s1;
-	unsigned char	*ptr_s2;
+	unsigned char	*cp_s1;
+	unsigned char	*cp_s2;
+	size_t			i;
 
-	ptr_s1 = (unsigned char *)s1;
-	ptr_s2 = (unsigned char *)s2;
-	while (n--)
+	if (s1 == NULL || s2 == NULL)
+		return (0);
+	i = 0;
+	cp_s1 = (unsigned char *)s1;
+	cp_s2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (i < n)
 	{
-		if (*ptr_s1 != *ptr_s2)
-			return (*ptr_s1 - *ptr_s2);
-		ptr_s1++;
-		ptr_s2++;
+		if (cp_s1[i] == cp_s2[i])
+			i++;
+		else
+			return (cp_s1[i] - cp_s2[i]);
 	}
-	return (0);
+	return (cp_s1[i - 1] - cp_s2[i - 1]);
 }

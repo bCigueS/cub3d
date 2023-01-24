@@ -3,70 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 14:13:12 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/11 11:58:46 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/12 13:07:23 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:00 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include <limits.h>
 
-static int	ft_int_len(int n)
+static char	*ft_pos(char *back, long n)
 {
-	unsigned int	nbr;
-	int				int_len;
+	int		i;
+	long	nb;
 
-	int_len = 0;
-	if (n < 0)
+	i = 0;
+	nb = n;
+	while (nb > 0)
 	{
-		nbr = -n;
-		int_len++;
+		nb = nb / 10;
+		i++;
 	}
-	else
-		nbr = n;
-	if (nbr == 0)
-		return (1);
-	while (nbr)
+	nb = i;
+	back = malloc(sizeof(char) * (i + 1));
+	if (back == NULL)
+		return (NULL);
+	while (i > 0)
 	{
-		int_len++;
-		nbr /= 10;
+		back[i - 1] = (n % 10) + 48;
+		n = n / 10;
+		i--;
 	}
-	return (int_len);
+	back[nb] = '\0';
+	return (back);
 }
 
-static unsigned int	ft_convert(int n)
+static char	*ft_neg(char *back, long n)
 {
-	unsigned int	nbr;
+	int		i;
+	long	nb;
 
-	if (n < 0)
-		nbr = -n;
-	else
-		nbr = n;
-	return (nbr);
+	i = 0;
+	n = -n;
+	nb = n;
+	while (nb > 0)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	back = malloc(sizeof(char) * (i + 2));
+	if (back == NULL)
+		return (NULL);
+	i++;
+	nb = i;
+	back[0] = '-';
+	while (i > 1)
+	{
+		back[i - 1] = (n % 10) + 48;
+		n = n / 10;
+		i--;
+	}
+	back[nb] = '\0';
+	return (back);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*tab;
-	size_t	nbr;
-	int		index;
+	char	*back;
+	long	nbr;
 
-	index = ft_int_len(n);
-	tab = (char *)malloc(sizeof(char) * ft_int_len(n) + 1);
-	if (!tab)
-		return (NULL);
-	nbr = ft_convert(n);
-	tab[index--] = '\0';
+	nbr = n;
+	back = 0;
 	if (nbr == 0)
-		tab[index] = '0';
-	while (nbr > 0)
 	{
-		tab[index--] = nbr % 10 + '0';
-		nbr /= 10;
+		back = malloc(sizeof(char) * 2);
+		if (back == NULL)
+			return (NULL);
+		back[0] = '0';
+		back[1] = '\0';
+		return (back);
 	}
-	if (n < 0)
-		tab[index] = '-';
-	return (tab);
-}
+	if (nbr < 0)
+		back = ft_neg(back, nbr);
+	else
+		back = ft_pos(back, nbr);
+	return (back);
+}	

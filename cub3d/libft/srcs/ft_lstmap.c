@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 09:29:58 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/16 08:54:53 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/14 20:03:33 by fbily             #+#    #+#             */
+/*   Updated: 2022/09/20 17:44:19 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new_lst;
-	t_list	*temp;
+	t_list	*res;
+	t_list	*actual;
 
-	if (!lst)
-		return (0);
-	new_lst = NULL;
+	if (lst == NULL || f == NULL || del == NULL)
+		return (NULL);
+	res = ft_lstnew(f(lst->content));
+	if (res == NULL)
+		return (NULL);
+	actual = res;
+	lst = lst->next;
 	while (lst)
 	{
-		temp = ft_lstnew(f(lst->content));
-		if (!temp)
+		actual->next = ft_lstnew(f(lst->content));
+		if (actual->next == NULL)
 		{
-			ft_lstclear(&new_lst, del);
-			return (0);
+			ft_lstclear(&res, del);
+			return (NULL);
 		}
-		ft_lstadd_back(&new_lst, temp);
+		actual = actual->next;
 		lst = lst->next;
 	}
-	return (new_lst);
+	return (res);
 }

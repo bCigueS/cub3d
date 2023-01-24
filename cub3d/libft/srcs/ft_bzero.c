@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 11:47:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2022/05/03 12:18:40 by sbeylot          ###   ########.fr       */
+/*   Created: 2022/05/08 12:16:58 by flamby            #+#    #+#             */
+/*   Updated: 2022/09/20 17:43:41 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * Input --
- * @s	:	Source
- * @n	:	Bytes to fill with 0
- * Return --
- * None
- */
 
 #include "../includes/libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {
-	char	*ptr;
+	unsigned char	*p;
+	size_t			i;
 
 	if (s == NULL)
 		return ;
-	ptr = s;
-	while (n--)
-		*ptr++ = '\0';
+	p = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		p[i] = '\0';
+		i++;
+	}
 }
