@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/24 09:52:02 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 17:58:55 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_map
 	int					map_height;
 	int					map_widht;
 	bool				check_o;
+	bool				door;
 }				t_map;
 
 typedef struct s_parser
@@ -61,8 +62,8 @@ typedef struct s_parser
 /***************************		PARSING.C		***************************/
 bool	read_textures(t_parser *parser);
 bool	test_textures(t_parser *parser);
-void	stock_colors(t_parser *parser);
 bool	check_file(t_parser *parser);
+bool	check_map(t_parser *parser);
 bool	parsing(t_parser *parser);
 
 /***************************	FILE_HANDLER.C		***************************/
@@ -87,12 +88,23 @@ bool	handle_textures(t_parser *parser, int index);
 void	get_textures(t_parser *parser, int index, int id);
 
 /***************************	PARSING_MAP.C	***************************/
+bool	check_orientation(t_parser *parser, int i, int j);
+bool	parse_middle(t_parser *parser, int i, int j);
+bool	check_ground(char **map, int i, int j);
+bool	check_door(char **map, int i, int j);
+bool	parse_map(t_parser *parser);
+
+/***************************	PARSING_MAP_UTILS.C	***************************/
 bool	resize_line(t_parser *parser, int k);
 void	find_max_len(t_parser *parser);
 bool	format_map(t_parser *parser);
-bool	check_map(t_parser *parser);
-bool	parse_map_h(t_parser *parser);
-bool	parse_map_v(t_parser *parser);
+bool	is_bordure(char c);
+bool	is_player(char c);
+
+/***************************	UTILS_PARSING.C	***************************/
+void	init_parsing(t_parser *parser, char *argv);
+void	stock_colors(t_parser *parser);
+void	print_map(char **map);
 
 #endif
 /* 

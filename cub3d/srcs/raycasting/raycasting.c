@@ -3,50 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 13:28:10 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 16:21:12 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
-void	choose_color(t_ray *r, t_pixel *start, t_pixel *end)
-{
-	unsigned int color;
-	if (r->is_horizontal_hit && r->ray_down)
-		color = RED;
-	else if (r->is_horizontal_hit && !r->ray_down)
-		color = GREEN;
-	else if (!r->is_horizontal_hit && r->ray_left)
-		color = BLUE;
-	else if (!r->is_horizontal_hit && !r->ray_left)
-		color = GOLD;
-	else 
-		color = BLACK;
-	start->color = color;
-	end->color = color;
-}
-void	raycasting_draw_wall(t_cub3d *cub, t_rcinfo rci, t_ray *r, int *pi)
-{
-	int		next;
-	t_pixel	start;
-	t_pixel	end;
-	next = *pi + STRIP;
-	choose_color(r, &start, &end);
-	while (*pi < next)
-	{
-		start = init_pixel(*pi, WINDOW_HEIGHT / 2 - (rci.wall_height / 2), \
-				start.color);
-		end = init_pixel(*pi, WINDOW_HEIGHT / 2 + (rci.wall_height / 2), \
-				end.color);
-		draw_line2(cub, init_line(start, end));
-		*pi += 1;
-	}
-}
-*/
 static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci,
 		t_ray *r, int y_coo)
 {
@@ -55,7 +20,7 @@ static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci,
 	unsigned int	tex_y;
 
 	if (cub->map[r->wh_index_y][r->wh_index_x] == 68)
-		tex = cub->door_to_show; 
+		tex = cub->door_to_show;
 	else if (!r->is_horizontal_hit && r->ray_left)
 		tex = &cub->texture[2];
 	else

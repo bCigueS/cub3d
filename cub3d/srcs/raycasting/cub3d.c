@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:08:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 14:01:05 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 15:29:05 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	bridge(t_parser *parser, t_cub3d *cub)
 	convert_map_to_int(parser, cub);
 	cub->info.map_col = parser->map.map_widht - 1;
 	cub->info.map_row = parser->map.map_height;
-	ft_printf_fd(1, "Col:[%d]\tRow:[%d]\n", cub->info.map_col, cub->info.map_row);
 	cub->info.map_dim_w = cub->info.map_col * TILE_SIZE;
 	cub->info.map_dim_h = cub->info.map_row * TILE_SIZE;
 	if (parser->map.orientation == 'N')

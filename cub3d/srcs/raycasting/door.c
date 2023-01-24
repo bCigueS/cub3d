@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:30:47 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 13:45:16 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 15:48:19 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ static int	player_next_to_door(t_cub3d *cub)
 	if ((map[y + 1][x] == 68 || map[y + 1][x] == 2) && p_look(a) == LOOK_DOWN)
 		return (map[y + 1][x]);
 	if ((map[y][x + 1] == 68 || map[y][x + 1] == 2) && p_look(a) == LOOK_RIGHT)
-	{
-		ft_printf("Ya une porte\n");
 		return (map[y][x + 1]);
-	}
 	if ((map[y][x - 1] == 68 || map[y][x - 1] == 2) && p_look(a) == LOOK_LEFT)
 		return (map[y][x - 1]);
 	return (0);

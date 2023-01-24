@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+         #
+#    By: fbily <fbily@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
-#    Updated: 2023/01/24 13:47:38 by sbeylot          ###   ########.fr        #
+#    Updated: 2023/01/24 17:55:48 by fbily            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRCS_NAME	:=	main.c\
 				parsing/parsing.c\
 				parsing/parsing_map.c\
 				parsing/textures_handler.c\
-				parsing/colors_handler.c
+				parsing/colors_handler.c\
+				parsing/parsing_map_utils.c
 
 SRCS		:=	$(wildcard $(SRCS_DIR)*.c)\
 
