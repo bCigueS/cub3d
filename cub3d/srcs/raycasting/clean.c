@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 14:04:31 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/24 19:52:43 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_map(char **map)
 	while (map[i])
 		free(map[i++]);
 	free(map);
+	map = NULL;
 }
 
 void	free_map_int(t_cub3d *cub)

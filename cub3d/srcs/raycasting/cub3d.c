@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:08:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 15:29:05 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:49:25 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	bridge(t_parser *parser, t_cub3d *cub)
 bool	cub3d(t_cub3d *cub, t_parser *parser)
 {
 	bridge(parser, cub);
+	clean_parsing(parser);
+	free_map(parser->map.map);
 	if (init_mlx(cub) == false)
 		return (clean_mlx(cub), false);
 	cub->player = init_player(cub);

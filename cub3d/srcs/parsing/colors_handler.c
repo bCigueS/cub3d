@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:51:24 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:19:54 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:47:28 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	convert_colors(t_parser *parser, int id)
 
 	i = 0;
 	k = 0;
-	while (parser->textures[id].path[i])
+	while (i < (int)ft_strlen(parser->textures[id].path))
 	{
 		j = 0;
 		while (ft_isdigit(parser->textures[id].path[i]) && j < 3)

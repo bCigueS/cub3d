@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:13:06 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/24 18:35:34 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:52:23 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ bool	check_ground(char **map, int i, int j)
 	if ((map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
 		|| (map[i][j + 1] == ' ' || map[i][j - 1] == ' '))
 	{
-		ft_printf_fd(2, "Error\nFind breach in a wall.\n");
+		ft_printf_fd(2, "Error\nFind breach in the map.\n");
 		return (false);
 	}
 	else if ((map[i - 1][j] == '\n' || map[i + 1][j] == '\n')
 		|| (map[i][j - 1] == '\n' || map[i][j + 1] == '\n'))
 	{
-		ft_printf_fd(2, "Error\nFind breach in a wall.\n");
+		ft_printf_fd(2, "Error\nFind breach in the map.\n");
 		return (false);
 	}
 	return (true);

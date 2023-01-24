@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/24 17:55:19 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:55:13 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,30 @@
 
 bool	parsing(t_parser *parser)
 {
+	parser->mlx = mlx_init();
+	if (!parser->mlx)
+	{
+		ft_printf_fd(STDERR_FILENO, "Error\nMlx init failed.\n");
+		exit(1);
+	}
 	if (check_file(parser) == false)
 		return (false);
 	if (get_file(parser) == false)
-		return (false);
+		return (clean_parsing(parser), false);
 	if (divide_file(parser) == false)
 		return (false);
 	if (read_textures(parser) == false)
-		return (false);
+		clean_and_exit(parser);
 	if (test_textures(parser) == false)
-		return (false);
+		clean_and_exit(parser);
 	stock_colors(parser);
 	if (check_map(parser) == false)
+	{
+		free_map_until(parser->map.map, parser->map.map_height);
+		free_map(parser->tex_lines);
+		clean_parsing(parser);
 		return (false);
+	}
 	return (true);
 }
 
@@ -123,5 +134,6 @@ bool	check_map(t_parser *parser)
 		return (false);
 	if (parse_map(parser) == false)
 		return (false);
+	free_map(parser->tex_lines);
 	return (true);
 }

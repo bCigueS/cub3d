@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 19:50:31 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 20:25:56 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:24:00 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,14 @@ bool	check_textures(t_parser *parser)
 		i++;
 	}
 	return (true);
+}
+
+void	clean_and_exit(t_parser *parser)
+{
+	if (*parser->tex_lines)
+		free_map(parser->tex_lines);
+	if (*parser->map.map)
+		free_map(parser->map.map);
+	clean_parsing(parser);
+	exit(1);
 }

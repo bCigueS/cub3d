@@ -5,7 +5,6 @@ SO     ./sprites/crate1.xpm
 NO ./sprites/crate2.xpm
 EA ./sprites/vent1.xpm
 
-
 WE ./sprites/wall1.xpm
 
 F 2,2,0

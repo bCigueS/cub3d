@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 16:11:32 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:45:21 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/24 20:11:00 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	get_file(t_parser *parser)
 	{
 		write(STDERR_FILENO, "Error\n", 7);
 		perror("open ");
-		return (false);
+		return (free_map(parser->file), false);
 	}
 	while (42)
 	{
@@ -85,6 +85,8 @@ static int	get_first_part(t_parser *parser)
 		else
 		{
 			parser->tex_lines[j] = ft_strdup(parser->file[i]);
+			if (!parser->tex_lines[j])
+				return (free_map_until(parser->map.map, 6), false);
 			i++;
 			j++;
 		}
@@ -110,6 +112,9 @@ static bool	get_map(t_parser *parser, int i, int j)
 	while (i < parser->file_lines)
 	{
 		parser->map.map[j] = ft_strdup(parser->file[i]);
+		if (!parser->map.map[j])
+			return (free_map_until(parser->map.map, parser->map.map_height),
+				false);
 		i++;
 		j++;
 	}
@@ -125,9 +130,18 @@ bool	divide_file(t_parser *parser)
 	j = 0;
 	i = get_first_part(parser);
 	if (i == -1)
+	{
+		free_map(parser->file);
+		clean_parsing(parser);
 		return (false);
+	}
 	if (get_map(parser, i, j) == false)
+	{
+		free_map(parser->file);
+		free_map(parser->tex_lines);
+		clean_parsing(parser);
 		return (false);
+	}
 	free_map(parser->file);
 	return (true);
 }
