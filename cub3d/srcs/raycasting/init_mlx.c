@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:04:07 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/25 10:19:11 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 12:23:02 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,19 @@ static bool	init_texture(t_cub3d *cub, t_parser *parser)
 	}
 	i = -1;
 	while (++i < 4)
+	{
 		cub->texture[i].img.addr = (int *)mlx_get_data_addr(\
 				cub->texture[i].img.img, &cub->texture[i].img.bpp, \
 				&cub->texture[i].img.line_len, &cub->texture[i].img.endian);
+		if (cub->texture[i].img.addr == NULL)
+			return (ft_printf_fd(2, "Error\n"), false);
+	}
 	return (true);
 }
 
 static bool	init_textures(t_cub3d *cub, t_parser *parser)
 {
-	cub->texture = (t_texture *)malloc(sizeof(t_texture) * 5);
+	cub->texture = (t_texture *)malloc(sizeof(t_texture) * 4);
 	if (!cub->texture)
 		return (false);
 	if (!init_texture(cub, parser))
@@ -104,6 +108,7 @@ bool	init_mlx(t_cub3d *cub, t_parser *parser)
 		return (clean_mlx(cub), false);
 	if (!init_textures(cub, parser))
 		return (clean_mlx(cub), false);
-	//init_door_tex(cub);
+	if (parser->map.door && !init_door_tex(cub))
+		return (clean_mlx(cub), false);
 	return (true);
 }
