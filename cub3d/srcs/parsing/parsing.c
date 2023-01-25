@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/25 11:27:26 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:51:43 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	check_file(t_parser *parser)
 
 	pts = ft_strrchr(parser->path_file, '.');
 	if (pts == NULL || ft_strncmp(pts, ".cub", 5) != 0)
-//		|| *pts == *parser->path_file)
+		//|| *pts == *parser->path_file)
 	{
 		ft_printf_fd(STDERR_FILENO, "Error\nMap must be a '.cub' file.\n");
 		return (false);

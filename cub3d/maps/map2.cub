@@ -8,7 +8,7 @@ EA ./sprites/vent1.xpm
 
 WE ./sprites/wall1.xpm
 
-F 20,20,20
+F 20, 20,20
 C   255,30,0
 
 

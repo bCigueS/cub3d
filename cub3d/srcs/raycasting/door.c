@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:30:47 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 15:48:19 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 15:46:57 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	p_look(double angle)
 {
-	if (angle > 1.25 * M_PI && angle < 1.75)
+	if (angle > 1.25 * M_PI && angle < 1.75 * M_PI)
 		return (LOOK_UP);
-	else if (angle > 0.25 && angle < 0.75)
+	else if (angle > 0.25 * M_PI && angle < 0.75 * M_PI)
 		return (LOOK_DOWN);
-	else if (angle > 1.75 || angle < 0.25)
+	else if (angle > 1.75 * M_PI || angle < 0.25 * M_PI)
 		return (LOOK_RIGHT);
 	else
 		return (LOOK_LEFT);
@@ -52,6 +52,7 @@ static void	action_open(t_cub3d *cub)
 	int		y;
 	int		**map;
 	double	a;
+
 
 	x = floor(cub->player->x / TILE_SIZE);
 	y = floor(cub->player->y / TILE_SIZE);

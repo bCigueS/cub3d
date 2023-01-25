@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:08:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/25 10:14:24 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 15:36:20 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void	fill_map(t_parser *parser, t_cub3d *cub, int x, int y)
 			parser->map.map[y][x] == 'E' || \
 			parser->map.map[y][x] == 'W')
 		cub->map[y][x] = 80;
+	else if (parser->map.map[y][x] == 'D')
+		cub->map[y][x] = 68;
 	else
 		cub->map[y][x] = 3;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:13:06 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/24 20:52:23 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:05:38 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,9 @@ bool	parse_middle(t_parser *parser, int i, int j)
 		if (check_orientation(parser, i, j) == false)
 			return (false);
 	}
-	else if (parser->map.map[i][j] == 'D')
-	{
-		if (check_door(parser->map.map, i, j) == false)
-			return (false);
-		parser->map.door = true;
-	}
 	else
 	{
-		ft_printf_fd(2, "Error_h\nUnrecognized character\n");
+		ft_printf_fd(2, "Error\nUnrecognized character\n");
 		return (false);
 	}
 	return (true);
@@ -113,3 +107,32 @@ bool	parse_map(t_parser *parser)
 	}
 	return (true);
 }
+/* For Bonus
+bool	parse_middle(t_parser *parser, int i, int j)
+{
+	if (is_bordure(parser->map.map[i][j]) == true)
+		return (true);
+	else if (parser->map.map[i][j] == '0')
+	{
+		if (check_ground(parser->map.map, i, j) == false)
+			return (false);
+	}
+	else if (is_player(parser->map.map[i][j]) == true)
+	{
+		if (check_orientation(parser, i, j) == false)
+			return (false);
+	}
+	else if (parser->map.map[i][j] == 'D')
+	{
+		if (check_door(parser->map.map, i, j) == false)
+			return (false);
+		parser->map.door = true;
+	}
+	else
+	{
+		ft_printf_fd(2, "Error\nUnrecognized character\n");
+		return (false);
+	}
+	return (true);
+}
+*/
