@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 16:21:12 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 11:18:40 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,23 @@ static void	raycasting_draw_wall_texture(t_cub3d *cub, t_rcinfo rci, \
 {
 	int		next;
 	double	y;
+	double	y_coo;
 
 	next = *pi + STRIP;
 	while (*pi < next)
 	{
 		y = 0;
-		while (y < rci.wall_height)
+		y_coo = WINDOW_HEIGHT / 2 - (rci.wall_height / 2) + y;
+		while (y_coo < 0)
+			y_coo = WINDOW_HEIGHT / 2 - (rci.wall_height / 2) + y++;
+		while (y_coo < WINDOW_HEIGHT)
 		{
-			draw_pixel(cub, init_pixel(*pi, \
-						(WINDOW_HEIGHT / 2 - (rci.wall_height / 2)) + y, \
-			choose_color(cub, rci, r, y)), WINDOW);
+			draw_pixel(cub, init_pixel(*pi, y_coo, \
+						choose_color(cub, rci, r, y)), WINDOW);
 			y += 1;
+			y_coo = WINDOW_HEIGHT / 2 - (rci.wall_height / 2) + y;
+			if (y >= rci.wall_height)
+				break ;
 		}
 		*pi += 1;
 	}
