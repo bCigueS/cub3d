@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:13:06 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/25 16:26:37 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 16:53:06 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ bool	parse_map(t_parser *parser)
 		}
 		i++;
 	}
+	if (parser->map.check_o == false)
+		return (ft_printf_fd(2, "Error\nMissing player.\n"), false);
 	return (true);
 }
 
