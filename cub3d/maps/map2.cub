@@ -2,7 +2,7 @@
 
 SO     ./sprites/crate1.xpm
 
-NO ./sprites/crate2.xpm
+NO ./sprites/coin5.xpm
 EA ./sprites/vent1.xpm
 
 
@@ -16,7 +16,7 @@ C   255,30,0
 1  1000000001
 1  1000000001
 1111100000001
-100000000111
+100S00000111
 1000000001
 1110111111
 1000000001

@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:08:11 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 19:52:43 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 10:21:35 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	clean_texture(t_cub3d *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[1].img.img);
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[2].img.img);
 	mlx_destroy_image(cub->mlx_ptr, cub->texture[3].img.img);
-	mlx_destroy_image(cub->mlx_ptr, cub->texture[4].img.img);
 	free(cub->texture);
 }
 
@@ -75,4 +74,6 @@ void	clean_mlx(t_cub3d *cub)
 	if (cub->mlx_ptr != NULL)
 		mlx_destroy_display(cub->mlx_ptr);
 	free(cub->mlx_ptr);
+	clean_parsing(cub->parser);
+	free_map(cub->parser->map.map);
 }

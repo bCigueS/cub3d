@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 10:04:07 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 14:00:36 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 10:19:11 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,44 +46,41 @@ static bool	init_img(t_cub3d *cub)
 	return (true);
 }
 
-static void	init_texture(t_cub3d *cub)
+static bool	init_texture(t_cub3d *cub, t_parser *parser)
 {
 	int	i;
 
-	cub->texture[0].img.img = \
-				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/vent1.xpm", \
-						&cub->texture[0].icon_w, &cub->texture[0].icon_h);
-	cub->texture[1].img.img = \
-				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/wall1.xpm", \
-						&cub->texture[1].icon_w, &cub->texture[1].icon_h);
-	cub->texture[2].img.img = \
-				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/window.xpm", \
-						&cub->texture[2].icon_w, &cub->texture[2].icon_h);
-	cub->texture[3].img.img = \
-				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/crate1.xpm", \
-						&cub->texture[3].icon_w, &cub->texture[3].icon_h);
-	cub->texture[4].img.img = \
-				mlx_xpm_file_to_image(cub->mlx_ptr, "./sprites/door1.xpm", \
-						&cub->texture[4].icon_w, &cub->texture[4].icon_h);
-	i = 0;
-	while (i < 5)
+	i = -1;
+	while (++i < 4)
 	{
+		cub->texture[i].img.img = mlx_xpm_file_to_image(cub->mlx_ptr, \
+				parser->textures[i].path, &cub->texture[i].icon_w, \
+				&cub->texture[i].icon_h);
+		if (cub->texture[i].img.img == NULL)
+		{
+			ft_printf_fd(2, "Error\n");
+			return (false);
+		}
+	}
+	i = -1;
+	while (++i < 4)
 		cub->texture[i].img.addr = (int *)mlx_get_data_addr(\
 				cub->texture[i].img.img, &cub->texture[i].img.bpp, \
 				&cub->texture[i].img.line_len, &cub->texture[i].img.endian);
-		i++;
-	}
+	return (true);
 }
 
-static void	init_textures(t_cub3d *cub)
+static bool	init_textures(t_cub3d *cub, t_parser *parser)
 {
 	cub->texture = (t_texture *)malloc(sizeof(t_texture) * 5);
 	if (!cub->texture)
-		return (clean_mlx(cub));
-	init_texture(cub);
+		return (false);
+	if (!init_texture(cub, parser))
+		return (false);
+	return (true);
 }
 
-bool	init_mlx(t_cub3d *cub)
+bool	init_mlx(t_cub3d *cub, t_parser *parser)
 {
 	cub->mlx_ptr = NULL;
 	cub->win_ptr = NULL;
@@ -94,6 +91,7 @@ bool	init_mlx(t_cub3d *cub)
 	cub->door = NULL;
 	cub->tab_ray = NULL;
 	cub->mlx_ptr = mlx_init();
+	cub->parser = parser;
 	if (cub->mlx_ptr == NULL)
 		return (false);
 	cub->win_ptr = mlx_new_window(cub->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, \
@@ -104,9 +102,8 @@ bool	init_mlx(t_cub3d *cub)
 		return (clean_mlx(cub), false);
 	if (!init_img(cub))
 		return (clean_mlx(cub), false);
-	init_textures(cub);
-	//init_door_tex(cub);
-	if (cub->texture == NULL)
+	if (!init_textures(cub, parser))
 		return (clean_mlx(cub), false);
+	//init_door_tex(cub);
 	return (true);
 }

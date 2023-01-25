@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:08:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 20:49:25 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 10:14:24 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	convert_map_to_int(t_parser *parser, t_cub3d *cub)
 
 static void	bridge(t_parser *parser, t_cub3d *cub)
 {
+	cub->map = NULL;
 	convert_map_to_int(parser, cub);
 	cub->info.map_col = parser->map.map_widht - 1;
 	cub->info.map_row = parser->map.map_height;
@@ -91,9 +92,7 @@ static void	bridge(t_parser *parser, t_cub3d *cub)
 bool	cub3d(t_cub3d *cub, t_parser *parser)
 {
 	bridge(parser, cub);
-	clean_parsing(parser);
-	free_map(parser->map.map);
-	if (init_mlx(cub) == false)
+	if (init_mlx(cub, parser) == false)
 		return (clean_mlx(cub), false);
 	cub->player = init_player(cub);
 	if (cub->player == NULL)

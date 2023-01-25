@@ -1,0 +1,13 @@
+
+
+SO     ./sprites/crate1.xpm
+
+NO ./sprites/crate2.xpm
+EA ./sprites/vent1.xpm
+
+
+WE ./sprites/wall1.xpm
+
+F 20,20,20
+C   255,30,0
+

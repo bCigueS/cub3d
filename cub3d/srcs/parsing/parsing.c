@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/24 20:55:13 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/25 09:57:23 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	parsing(t_parser *parser)
 		exit(1);
 	}
 	if (check_file(parser) == false)
-		return (false);
+		return (clean_parsing(parser), false);
 	if (get_file(parser) == false)
 		return (clean_parsing(parser), false);
 	if (divide_file(parser) == false)

@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:21:57 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 14:13:41 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 10:18:13 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_cub3d
 	t_texture	*door;
 	t_texture	*door_to_show;
 	t_info		info;
+	t_parser	*parser;
 }				t_cub3d;
 
 int		render(void *param);
