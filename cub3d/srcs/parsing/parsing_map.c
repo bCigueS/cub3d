@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:13:06 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/25 16:05:38 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:26:37 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	parse_middle(t_parser *parser, int i, int j)
 	}
 	else
 	{
-		ft_printf_fd(2, "Error\nUnrecognized character\n");
+		ft_printf_fd(2, "Error\nUnrecognized character.\n");
 		return (false);
 	}
 	return (true);
@@ -107,7 +107,8 @@ bool	parse_map(t_parser *parser)
 	}
 	return (true);
 }
-/* For Bonus
+
+/* //For Bonus
 bool	parse_middle(t_parser *parser, int i, int j)
 {
 	if (is_bordure(parser->map.map[i][j]) == true)
@@ -130,9 +131,9 @@ bool	parse_middle(t_parser *parser, int i, int j)
 	}
 	else
 	{
-		ft_printf_fd(2, "Error\nUnrecognized character\n");
+		ft_printf_fd(2, "Error\nUnrecognized character.\n");
 		return (false);
 	}
 	return (true);
 }
-*/
+ */

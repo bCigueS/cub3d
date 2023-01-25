@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:08:46 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/25 15:36:20 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:24:55 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ static void	bridge(t_parser *parser, t_cub3d *cub)
 	else
 		cub->info.player_orientation = 0;
 	cub->info.fov = degree_to_radian(FOV);
-	cub->info.ceilling = parser->textures[4].hexa_color;
-	cub->info.floor = parser->textures[5].hexa_color;
+	cub->info.ceilling = parser->textures[C].hexa_color;
+	cub->info.floor = parser->textures[F].hexa_color;
 }
 
 bool	cub3d(t_cub3d *cub, t_parser *parser)

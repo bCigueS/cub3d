@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/25 15:51:43 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:39:22 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,10 @@ bool	check_file(t_parser *parser)
 	int		fd;
 
 	pts = ft_strrchr(parser->path_file, '.');
-	if (pts == NULL || ft_strncmp(pts, ".cub", 5) != 0)
-		//|| *pts == *parser->path_file)
-	{
-		ft_printf_fd(STDERR_FILENO, "Error\nMap must be a '.cub' file.\n");
-		return (false);
-	}
+	if (pts == NULL || ft_strncmp(pts, ".cub", 5) != 0
+		|| ft_strncmp(parser->path_file, ".cub",
+			(int)ft_strlen(parser->path_file)) == 0)
+		return (ft_printf_fd(2, "Error\nMap must be a '.cub' file.\n"), false);
 	fd = open(parser->path_file, __O_DIRECTORY);
 	if (fd >= 0)
 	{
