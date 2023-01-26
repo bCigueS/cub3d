@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:30:47 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/25 15:46:57 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/26 11:19:03 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	action_open(t_cub3d *cub)
 	int		y;
 	int		**map;
 	double	a;
-
 
 	x = floor(cub->player->x / TILE_SIZE);
 	y = floor(cub->player->y / TILE_SIZE);

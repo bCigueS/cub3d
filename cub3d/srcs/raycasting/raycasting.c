@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 09:37:34 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/26 07:47:59 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/26 10:04:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static unsigned int	texture_color_vertical(t_cub3d *cub, t_rcinfo rci,
 	if (tex_x < (unsigned int)tex->icon_w && tex_y < (unsigned int)tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
-		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
+		return (tex->img.addr[(tex_x - 1) + (tex->icon_w * tex_y - 1)]);
 }
 
 static unsigned int	texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, \
@@ -59,7 +59,7 @@ static unsigned int	texture_color_horizontal(t_cub3d *cub, t_rcinfo rci, \
 	if (tex_x < (unsigned int)tex->icon_w && tex_y < (unsigned int)tex->icon_h)
 		return (tex->img.addr[tex_x + tex->icon_w * tex_y]);
 	else
-		return (tex->img.addr[tex_x - 1 + (tex->icon_w * tex_y - 1)]);
+		return (tex->img.addr[(tex_x - 1) + (tex->icon_w * tex_y)]);
 }
 
 static unsigned int	choose_color(t_cub3d *cub, t_rcinfo rci, \

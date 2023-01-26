@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 07:32:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 15:42:38 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/26 11:02:48 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	draw_player(t_cub3d *cub)
 
 	y = 0;
 	ratio = cub->mmap.ratio;
+	if (cub->player->img.img == NULL)
+		return ;
 	while (y < cub->player->icon_h)
 	{
 		x = 0;
@@ -108,7 +110,10 @@ t_player	*init_player(t_cub3d *cub)
 	player->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, \
 			"./sprites/cercle.xpm", &player->icon_w, &player->icon_h);
 	if (!player->img.img)
-		return (free(player), NULL);
+	{
+		player->img.img = NULL;
+		return (player);
+	}
 	player->img.addr = (int *)mlx_get_data_addr(player->img.img, \
 			&player->img.bpp, &player->img.line_len, &player->img.endian);
 	if (cub->img.addr == NULL)
