@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:35:38 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/25 15:39:49 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/26 07:49:11 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ static void	player_mouvement(int keycode, t_cub3d *cub)
 
 static void	straf(t_player *p, t_cub3d *cub, double straf)
 {
-	int			i;
 	double		newx;
 	double		newy;
 
-	i = p->walk;
 	newx = p->x + cos(straf) * (p->mspeed + 2);
 	newy = p->y + sin(straf) * (p->mspeed + 2);
 	if (!(is_a_wall(cub, newx, newy)))

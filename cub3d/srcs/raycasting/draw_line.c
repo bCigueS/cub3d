@@ -6,7 +6,7 @@
 /*   By: sbeylot <sbeylot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:11:51 by sbeylot           #+#    #+#             */
-/*   Updated: 2023/01/24 13:51:15 by sbeylot          ###   ########.fr       */
+/*   Updated: 2023/01/26 07:48:51 by sbeylot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,35 +70,8 @@ void	draw_line(t_cub3d *cub, t_line line)
 			line.err = line.err + line.dx;
 			line.y = line.y + line.ystep;
 		}
-		if ((line.x < 0 && line.x >= (unsigned int)cub->info.map_dim_w) && \
-			(line.y < 0 && line.y >= (unsigned int)cub->info.map_dim_w))
-			break ;
-	}
-}
-
-void	draw_line2(t_cub3d *cub, t_line line)
-{
-	int	err2;
-
-	while (1)
-	{
-		draw_pixel(cub, init_pixel(line.x, line.y, line.color), WINDOW);
-		if (line.x == (unsigned int)line.p2.x && \
-				line.y == (unsigned int)line.p2.y)
-			break ;
-		err2 = 2 * line.err;
-		if (err2 > -line.dy)
-		{
-			line.err = line.err - line.dy;
-			line.x = line.x + line.xstep;
-		}
-		if (err2 < line.dx)
-		{
-			line.err = line.err + line.dx;
-			line.y = line.y + line.ystep;
-		}
-		if ((line.x < 0 && line.x >= (unsigned int)cub->info.map_dim_w) && \
-			(line.y < 0 && line.y >= (unsigned int)cub->info.map_dim_w))
+		if (line.x >= (unsigned int)cub->info.map_dim_w && \
+			line.y >= (unsigned int)cub->info.map_dim_w)
 			break ;
 	}
 }
